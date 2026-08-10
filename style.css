@@ -1,177 +1,407 @@
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #fbf9f5;
-      color: #4a4a4a;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fbf9f5;
+  color: #4a4a4a;
+}
 
-    /* --- PANTALLA COMPLETA DEL SOBRE --- */
-    .contenedor-sobre {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #f4eee8;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      transition: opacity 1.2s ease, transform 1.2s ease, visibility 1.2s;
-    }
+/* --- CONTENEDOR DEL SOBRE A PANTALLA COMPLETA --- */
+.contenedor-sobre {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh; /* dvh se adapta mejor a la pantalla real de móviles */
+  background-color: #f4eee8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out, visibility 1s;
+}
 
-    /* Estado oculto del sobre tras completar la animación */
-    .contenedor-sobre.oculto {
-      opacity: 0;
-      transform: translateY(-100%);
-      visibility: hidden;
-      pointer-events: none;
-    }
+/* Estado oculto del sobre cuando termina la animación */
+.contenedor-sobre.oculto {
+  opacity: 0;
+  transform: translateY(-100%);
+  visibility: hidden;
+  pointer-events: none;
+}
 
-    .instruccion-clic {
-      margin-top: 35px;
-      font-size: 0.9rem;
-      letter-spacing: 3px;
-      color: #8c7a6b;
-      text-transform: uppercase;
-      animation: fadinOut 2s infinite;
-    }
+/* ESTRUCTURA Y ESCALADO DEL SOBRE */
+.sobre {
+  position: relative;
+  width: 90vw;
+  max-width: 380px;
+  height: 60vw;
+  max-height: 250px;
+  cursor: pointer;
+  perspective: 1000px;
+}
 
-    @keyframes fadinOut {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
+/* Solapa superior */
+.sobre-solapa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 3;
+  transform-origin: top;
+  transition: transform 0.6s ease-in-out, z-index 0.6s;
+}
 
-    .sobre {
-      position: relative;
-      width: 320px;
-      height: 220px;
-      cursor: pointer;
-      perspective: 1000px;
-    }
+/* Parte inferior del sobre */
+.sobre-abajo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+}
 
-    /* Solapa superior */
-    .sobre-solapa {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 3;
-      transform-origin: top;
-      transition: transform 0.6s ease-in-out, z-index 0.6s;
-    }
+/* Tarjeta / Invitación Interior */
+.InvitacionPequeña {
+  position: absolute;
+  top: 5%;
+  left: 4%;
+  width: 92%;
+  height: 90%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.8s ease-in-out 0.4s, z-index 0s 0.8s;
+  padding: 10px;
+  border: 1px solid #eae0d5;
+}
 
-    /* Parte inferior del sobre */
-    .sobre-abajo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 2;
-    }
+/* Texto con animación letra por letra */
+.escritura-letraporletra {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  color: #6b5b4e;
+  border-right: 2px solid #6b5b4e;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  animation: parpadeoCursor 0.75s step-end infinite;
+}
 
-    /* Tarjeta interior pequeñas */
-    .InvitacionPequeña {
-      position: absolute;
-      top: 10px;
-      left: 5%;
-      width: 90%;
-      height: 190px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.8s ease-in-out 0.4s, z-index 0s 0.8s;
-      padding: 15px;
-      border: 1px solid #eae0d5;
-    }
+@keyframes parpadeoCursor {
+  from, to { border-color: transparent; }
+  50% { border-color: #6b5b4e; }
+}
 
-    /* Texto con efecto mecanografiado */
-    .escritura-letraporletra {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.2rem;
-      color: #6b5b4e;
-      border-right: 2px solid #6b5b4e;
-      white-space: nowrap;
-      overflow: hidden;
-      display: inline-block;
-      animation: parpadeoCursor 0.75s step-end infinite;
-    }
+/* ANIMACIONES AL DAR CLIC EN EL SOBRE */
+.sobre.abierto .sobre-solapa {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
 
-    @keyframes parpadeoCursor {
-      from, to { border-color: transparent; }
-      50% { border-color: #6b5b4e; }
-    }
+.sobre.abierto .InvitacionPequeña {
+  transform: translateY(-55%);
+  z-index: 4;
+}
 
-    /* Animación del sobre abierto */
-    .sobre.abierto .sobre-solapa {
-      transform: rotateX(180deg);
-      z-index: 0;
-    }
+/* Texto indicativo */
+.instruccion-clic {
+  margin-top: 40px;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: #8c7a6b;
+  text-transform: uppercase;
+  animation: fadeInOut 2s infinite;
+}
 
-    .sobre.abierto .InvitacionPequeña {
-      transform: translateY(-130px);
-      z-index: 4;
-    }
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
 
-    /* --- SECCIÓN PRINCIPAL CON LA FOTO --- */
-    .seccion-principal {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 20px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
-    }
+/* --- SECCIÓN PRINCIPAL DE BIENVENIDA --- */
+.seccion-principal {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
 
-    .seccion-principal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+.seccion-principal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .titulo-novios {
-      font-family: 'Great Vibes', cursive;
-      font-size: 4.5rem;
-      color: #5a4a3e;
-      margin-bottom: 5px;
-    }
+.titulo-novios {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  color: #5a4a3e;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
 
-    .subtitulo-boda {
-      font-size: 1rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #9e8c7c;
-      margin-bottom: 40px;
-    }
+.subtitulo-boda {
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #9e8c7c;
+  margin-bottom: 25px;
+}
 
-    .tarjeta-foto {
-      max-width: 500px;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-      border: 8px solid #ffffff;
-      background-color: #ffffff;
-    }
+.tarjeta-foto {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  border: 6px solid #ffffff;
+  background-color: #ffffff;
+}
 
-    .imagen-principal {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
+
+
+/* --- SECCIÓN PRINCIPAL PANTALLA COMPLETA --- */
+.seccion-principal {
+  width: 100vw;
+  height: 100dvh; /* Ocupa exactamente el 100% de la pantalla del móvil */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye arriba, centro y abajo */
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+
+.seccion-principal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ENCABEZADO (ARRIBA) */
+.encabezado-novios {
+  margin-top: 10px;
+}
+
+.titulo-novios {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.2rem;
+  color: #5a4a3e;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.subtitulo-boda {
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #9e8c7c;
+}
+
+/* FOTO (CENTRO) */
+.tarjeta-foto {
+  width: 100%;
+  max-width: 320px;
+  height: 52vh; /* Ajusta la altura de la foto para no desbordar */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  border: 6px solid #ffffff;
+  background-color: #ffffff;
+}
+
+.imagen-principal {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garantiza que la imagen llene el contenedor con buena proporción */
+  display: block;
+}
+
+/* FECHA (ABAJO) */
+.pie-fecha {
+  margin-bottom: 10px;
+}
+
+.fecha-boda {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 5px;
+  color: #6b5b4e;
+}
+
+/* PALETA DE COLORES BODA
+   - Dorado / Bronce cálido: rgb(109, 83, 42)
+   - Crema / Marfil:          rgb(234, 228, 204)
+   - Verde Oliva / Oscuro:    rgb(55, 57, 36)
+*/
+
+.NuestraBoda {
+  width: 100vw;
+  min-height: 100dvh;
+  background-image: url('Imagenes/paneles.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgb(234, 228, 204); /* Fondo base crema */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* Cita y texto superior */
+.texto.partearriba {
+  max-width: 340px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.texto.partearriba span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgb(55, 57, 36); /* Verde oliva para buena legibilidad */
+  font-style: italic;
+  display: block;
+}
+
+/* Contenedor central con la foto y las iniciales */
+.partecentral {
+  position: relative;
+  width: 80%;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imagen central */
+.imagen-central {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 4px solid rgb(234, 228, 204);
+  box-shadow: 0 8px 20px rgba(55, 57, 36, 0.2);
+  display: block;
+  object-fit: cover;
+}
+
+/* Iniciales S & E superpuestas a la derecha */
+.textoHorizontal.derecho {
+  position: absolute;
+  right: -15px;
+  bottom: -15px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.8rem;
+  color: rgb(109, 83, 42); /* Dorado/bronce cálido */
+  background-color: rgb(234, 228, 204);
+  padding: 5px 15px;
+  border-radius: 30px;
+  border: 1px solid rgb(109, 83, 42);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  white-space: nowrap;
+}
+
+/* --- SECTION BENDICIÓN DE PADRES --- */
+.bendicionpadres {
+  position: relative; /* Permite posicionar la imagen de forma absoluta en la sección */
+  width: 100vw;
+  min-height: 100dvh;
+  background-color: rgb(55, 57, 36); /* Verde oliva principal */
+  color: rgb(234, 228, 204);         /* Texto crema */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* Evita desbordamientos por la rotación */
+}
+
+/* Contenido centralizado */
+.contenido-bendicion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2; /* Mantiene el texto por encima de la imagen */
+  max-width: 80%;
+}
+
+.nombres-padres {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.padre {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ampersand {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  color: rgb(109, 83, 42); /* Tono dorado / bronce */
+  margin: 4px 0;
+}
+
+.divisor {
+  width: 60px;
+  height: 1px;
+  background-color: rgb(109, 83, 42);
+  margin: 25px 0;
+}
+
+.texto-bendicion span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  font-style: italic;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+/* Imagen en el lado derecho de la sección */
+.imagen-brillante.back65opacityrotate-90 {
+  position: absolute;
+  right: -20px; /* Ajusta la posición para que sobresalga o se alinee al borde */
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg); /* Centra verticalmente y aplica rotación */
+  width: 120px; /* Ajusta el tamaño deseado */
+  height: auto;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 1;
+}

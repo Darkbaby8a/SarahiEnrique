@@ -10,19 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (abierto) return;
     abierto = true;
 
-    // 1. Abrir la solapa y elevar la invitación pequeña
+    // 1. Abrir la solapa y desplazar la tarjeta interior
     sobre.classList.add("abierto");
 
-    // 2. Escribir el texto letra por letra después de abrir la solapa
+    // 2. Iniciar el efecto de mecanografiado
     setTimeout(() => {
-      escribirTexto(textoElemento, textoAEscribir, 100, () => {
-        // 3. Una vez terminado el texto, esperar 1.2s y desplazar la pantalla al contenido principal
+      escribirTexto(textoElemento, textoAEscribir, 90, () => {
+        // 3. Ocultar el sobre y mostrar la sección principal con la foto
         setTimeout(() => {
           contenedorSobre.classList.add("oculto");
           seccionPrincipal.classList.add("visible");
-        }, 1200);
+        }, 1000);
       });
-    }, 1000);
+    }, 800);
   });
 
   function escribirTexto(elemento, texto, velocidad, callback) {
