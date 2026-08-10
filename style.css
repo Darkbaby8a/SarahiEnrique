@@ -862,3 +862,80 @@ font-family: 'Great Vibes', cursive;
   margin-top: 8px;
   font-weight: 500;
 }
+/* --- SECCIÓN DETALLIADO DE BODA (VESTIMENTA, REGALOS, REGLAS) --- 
+   Fondo sección:      linear-gradient crema a verde suave
+   Verde oliva texto:  rgb(55, 57, 36)
+   Verde hoja (#7E8C54): rgb(126, 140, 84)
+   Dorado / Bronce:    rgb(180, 142, 85)
+*/
+
+.seccion-detalles {
+  width: 100vw;
+  min-height: 100dvh;
+  background: linear-gradient(
+    180deg,
+    rgb(234, 228, 204) 0%,
+    rgba(126, 140, 84, 0.12) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  padding: 60px 20px;
+  box-sizing: border-box;
+}
+
+/* Tarjetas individuales de detalles */
+.tarjeta-detalle {
+  width: 100%;
+  max-width: 380px;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(55, 57, 36, 0.08);
+  border: 1px solid rgba(180, 142, 85, 0.3);
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+/* Iconos ilustrativos */
+.icono-detalle {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+/* Títulos con tipografía cursiva elegante */
+.tarjeta-detalle .minititulo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.3rem;
+  font-weight: normal;
+  color: rgb(55, 57, 36);
+  margin: 0 0 12px 0;
+}
+
+/* Párrafos e información */
+.tarjeta-detalle .texto {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #4a4a4a;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Estilo especial para la palabra "Formal" */
+.texto-destacado {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #7E8C54 !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
