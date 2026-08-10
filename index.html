@@ -2,53 +2,71 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animación de Sobre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Invitación - Sarahí & Enrique</title>
+  <!-- Fuentes elegantes para invitación -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
-    /* Estilos generales */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    /* Ocupa la pantalla completa del celular */
     body {
-      background-color: #f7f5ee; /* Fondo claro similar al del video */
+      width: 100vw;
+      height: 100dvh;
+      background-color: #f6f3eb; /* Fondo cremoso suave */
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      font-family: 'Georgia', serif;
+      overflow: hidden;
+      font-family: 'Cormorant Garamond', serif;
     }
 
-    /* Contenedor Principal del Sobre */
+    /* Contenedor adaptativo para cualquier resolución móvil */
+    .screen-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Wrapper del sobre */
     .envelope-wrapper {
       position: relative;
-      width: 320px;
-      height: 220px;
-      margin-top: 80px; /* Espacio para cuando la solapa se abra hacia arriba */
+      width: 90vw;
+      max-width: 380px;
+      height: 250px;
+      perspective: 1000px;
     }
 
-    /* Cuerpo base del sobre */
+    /* Cuerpo principal del sobre con BORDES REDONDOS */
     .envelope {
       position: relative;
       width: 100%;
       height: 100%;
-      background-color: #a49786; /* Color marrón del sobre */
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
+      background-color: #a39583;
+      border-radius: 20px; /* Bordes redondeados principales */
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
     }
 
-    /* Carta / Tarjeta interior */
+    /* Tarjeta interior */
     .card {
       position: absolute;
       top: 10px;
-      left: 15px;
-      width: 290px;
-      height: 190px;
-      background-color: #fdfcf7;
-      border-radius: 2px;
+      left: 12px;
+      right: 12px;
+      bottom: 10px;
+      background-color: #fdfbf7;
+      border-radius: 14px; /* Bordes redondos de la tarjeta */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -56,167 +74,167 @@
       text-align: center;
       padding: 20px;
       z-index: 1;
+      border: 1px solid #eae3d2;
     }
 
-    /* Texto dentro de la carta */
+    /* Texto de la tarjeta */
     .names {
-      font-family: 'Brush Script MT', 'Great Vibes', cursive, serif;
-      font-size: 2rem;
-      color: #4a4238;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.2rem, 8vw, 3rem);
+      color: #3b332a;
       opacity: 0;
-      transition: opacity 1.5s ease-in-out;
+      transform: translateY(10px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
     }
 
     .date {
-      font-size: 0.9rem;
-      color: #6e6458;
-      margin-top: 10px;
+      font-size: clamp(0.9rem, 4vw, 1.1rem);
+      color: #6b6052;
+      margin-top: 8px;
+      letter-spacing: 2px;
       font-style: italic;
       opacity: 0;
-      transition: opacity 1.5s ease-in-out 0.8s; /* Aparece después del nombre */
+      transform: translateY(10px);
+      transition: opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
     }
 
-    /* Solapa superior desplegable */
-    .flap {
+    /* Solapa superior desplegable con bordes suavizados */
+    .flap-container {
       position: absolute;
       top: 0;
       left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-top: 115px solid #948776; /* Solapa cerrada hacia abajo */
+      width: 100%;
+      height: 130px;
       transform-origin: top;
-      transition: transform 1.2s ease-in-out;
-      z-index: 3;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 4;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      overflow: hidden;
     }
 
-    /* Caras triangulares del frente del sobre */
+    /* Triángulo de la solapa con punta redondeada */
+    .flap-shape {
+      position: absolute;
+      top: -65px;
+      left: 50%;
+      width: 180px;
+      height: 180px;
+      background-color: #948674;
+      transform: translateX(-50%) rotate(45deg);
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Bolsillo inferior/laterales con bordes redondos */
     .pocket-left {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid #a89b8a;
-      border-top: 110px solid transparent;
-      border-bottom: 110px solid #a89b8a;
+      bottom: -40px;
+      left: -40px;
+      width: 220px;
+      height: 220px;
+      background-color: #a99c8a;
+      transform: rotate(45deg);
+      border-radius: 25px;
       z-index: 2;
     }
 
     .pocket-right {
       position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 0;
-      height: 0;
-      border-right: 160px solid #a09382;
-      border-top: 110px solid transparent;
-      border-bottom: 110px solid #a09382;
+      bottom: -40px;
+      right: -40px;
+      width: 220px;
+      height: 220px;
+      background-color: #a19482;
+      transform: rotate(45deg);
+      border-radius: 25px;
       z-index: 2;
     }
 
     .pocket-bottom {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-bottom: 115px solid #b2a594;
-      z-index: 2;
+      bottom: -110px;
+      left: 50%;
+      width: 260px;
+      height: 260px;
+      background-color: #b2a593;
+      transform: translateX(-50%) rotate(45deg);
+      border-radius: 30px;
+      z-index: 3;
     }
 
-    /* Sello dorado */
+    /* Sello dorado redondo */
     .seal {
       position: absolute;
-      top: 90px;
+      top: 100px;
       left: 50%;
       transform: translateX(-50%);
-      width: 42px;
-      height: 42px;
-      background: radial-gradient(circle, #ffe28a 0%, #d4af37 60%, #aa820a 100%);
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(circle, #ffe699 0%, #d4af37 60%, #997509 100%);
       border-radius: 50%;
-      border: 2px dashed #b89218;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-      z-index: 4;
-      cursor: pointer;
-      transition: opacity 0.5s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.25), inset 0 0 0 3px rgba(255,255,255,0.3);
+      z-index: 5;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    /* --- Clases activadas por JavaScript --- */
-    .envelope-wrapper.open .flap {
+    /* --- Estados de apertura automática --- */
+    .envelope-wrapper.open .flap-container {
       transform: rotateX(180deg);
-      z-index: 0; /* Pasa detrás de la carta al abrirse */
+      z-index: 0;
     }
 
     .envelope-wrapper.open .seal {
       opacity: 0;
+      transform: translateX(-50%) scale(0.5);
       pointer-events: none;
     }
 
     .envelope-wrapper.open .names,
     .envelope-wrapper.open .date {
       opacity: 1;
-    }
-
-    /* Botón opcional de reinicio */
-    .btn-replay {
-      margin-top: 40px;
-      padding: 10px 20px;
-      background-color: #8c7f6e;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background-color 0.3s;
-    }
-
-    .btn-replay:hover {
-      background-color: #6e6354;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
-  <div class="envelope-wrapper" id="envelopeWrapper">
-    <div class="envelope">
-      <div class="card">
-        <div class="names">Sarahí & Enrique</div>
-        <div class="date">27.09.2026</div>
+  <div class="screen-container">
+    <div class="envelope-wrapper" id="envelopeWrapper">
+      <div class="envelope">
+        
+        <!-- Tarjeta Interior -->
+        <div class="card">
+          <div class="names">Sarahí & Enrique</div>
+          <div class="date">27.09.2026</div>
+        </div>
+
+        <!-- Solapa Superior -->
+        <div class="flap-container">
+          <div class="flap-shape"></div>
+        </div>
+
+        <!-- Caras del Sobre -->
+        <div class="pocket-left"></div>
+        <div class="pocket-right"></div>
+        <div class="pocket-bottom"></div>
+
+        <!-- Sello Dorado -->
+        <div class="seal"></div>
+
       </div>
-
-      <div class="flap"></div>
-      <div class="pocket-left"></div>
-      <div class="pocket-right"></div>
-      <div class="pocket-bottom"></div>
-
-      <div class="seal" id="seal"></div>
     </div>
   </div>
 
-  <button class="btn-replay" onclick="toggleEnvelope()">Abrir / Cerrar</button>
-
   <script>
-    const envelopeWrapper = document.getElementById('envelopeWrapper');
-    const seal = document.getElementById('seal');
-
-    function toggleEnvelope() {
-      envelopeWrapper.classList.toggle('open');
-    }
-
-    // Abre automáticamente al hacer clic en el sello
-    seal.addEventListener('click', () => {
-      envelopeWrapper.classList.add('open');
-    });
-
-    // Inicia la animación automáticamente después de 1 segundo
-    window.addEventListener('load', () => {
+    // Apertura automática al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      const envelope = document.getElementById('envelopeWrapper');
+      
+      // Breve pausa inicial para dar efecto suave
       setTimeout(() => {
-        envelopeWrapper.classList.add('open');
-      }, 1000);
+        envelope.classList.add('open');
+      }, 700);
     });
   </script>
 
