@@ -50,9 +50,9 @@ export const handler = async (event) => {
     }
 
     const query = `
-      UPDATE "IsmaLuisa"
+      UPDATE "sarahienrique"
       SET
-        "FamiliaDesc" = $1,
+        "familiades" = $1,
         "familiaidentificador" = $2,
         "Pases" = $3
       WHERE id = $4

@@ -34,6 +34,7 @@ export const handler = async (event) => {
 
     const familiaDesc = body.FamiliaDesc || body.familiades;
     const pases = body.Pases !== undefined ? body.Pases : body.pases;
+    let familiaNombreReq = body.familiaNombre || body.familiaidentificador;
 
     if (!familiaDesc || pases === undefined) {
       return {
@@ -45,35 +46,47 @@ export const handler = async (event) => {
       };
     }
 
-    // 1. Crear el identificador base sin acentos ni símbolos
-    const identificadorBase = familiaDesc
-      .trim()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "")
-      .replace(/\s+/g, "_");
+    // 1. Obtener identificador base: usar el del cliente o generarlo a partir del nombre
+    let identificadorBase = "";
+
+    if (familiaNombreReq && familiaNombreReq.trim() !== "") {
+      identificadorBase = familiaNombreReq
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-") // Reemplazar caracteres no alfanuméricos con guion
+        .replace(/-+/g, "-");
+    } else {
+      identificadorBase = familiaDesc
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\s+/g, "-");
+    }
 
     let familiaNombreUnico = identificadorBase;
 
-    // 2. Verificar si ya existen registros con ese identificador
+    // 2. Verificar si ya existen registros con ese identificador exacto o con prefijo
     const checkQuery = `
       SELECT COUNT(*) as total 
-      FROM "IsmaLuisa" 
+      FROM "sarahienrique" 
       WHERE "familiaidentificador" = $1 OR "familiaidentificador" LIKE $2;
     `;
     const checkValues = [identificadorBase, `${identificadorBase}-%`];
     const checkResult = await pool.query(checkQuery, checkValues);
     const coincidencias = parseInt(checkResult.rows[0].total, 10);
 
-    // 3. Concatenar número consecutivo si existe duplicidad
+    // 3. Concatenar consecutivo si el identificador exacto está tomado
     if (coincidencias > 0) {
       familiaNombreUnico = `${identificadorBase}-${coincidencias}`;
     }
 
     // 4. Insertar en la base de datos
     const insertQuery = `
-      INSERT INTO "IsmaLuisa" ("familiaidentificador", "familiades", "Pases")
+      INSERT INTO "sarahienrique" ("familiaidentificador", "familiades", "pases")
       VALUES ($1, $2, $3)
       RETURNING id, "familiaidentificador";
     `;

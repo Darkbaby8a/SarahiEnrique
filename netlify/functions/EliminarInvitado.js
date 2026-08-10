@@ -9,10 +9,11 @@ export const handler = async (event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "POST, DELETE, OPTIONS",
     "Content-Type": "application/json",
   };
 
+  // 1. Manejo de Preflight OPTIONS
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
@@ -21,7 +22,8 @@ export const handler = async (event) => {
     };
   }
 
-  if (event.httpMethod !== "POST") {
+  // 2. Permitir solo POST y DELETE
+  if (event.httpMethod !== "POST" && event.httpMethod !== "DELETE") {
     return {
       statusCode: 405,
       headers,
@@ -31,32 +33,35 @@ export const handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || "{}");
-    const id = body.id;
+    // Obtener ID desde Query Parameter (?id=123) o desde el Body ({ id: 123 })
+    const rawId = event.queryStringParameters?.id || body.id;
+    const parsedId = parseInt(rawId, 10);
 
-    if (!id) {
+    if (!rawId || isNaN(parsedId)) {
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({
-          error: "Debe proporcionar el id.",
+          error: "Debe proporcionar un id válido y numérico.",
         }),
       };
     }
 
+    // Nota: Asegúrate de que la tabla coincida con la de tu entorno actual ("sarahienrique" o "IsmaLuisa")
     const query = `
-      DELETE FROM "IsmaLuisa"
+      DELETE FROM "sarahienrique"
       WHERE id = $1
       RETURNING id;
     `;
 
-    const result = await pool.query(query, [parseInt(id, 10)]);
+    const result = await pool.query(query, [parsedId]);
 
     if (result.rowCount === 0) {
       return {
         statusCode: 404,
         headers,
         body: JSON.stringify({
-          error: "El invitado no existe.",
+          error: "El invitado no existe o ya fue eliminado.",
         }),
       };
     }
