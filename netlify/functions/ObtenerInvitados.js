@@ -33,7 +33,7 @@ export const handler = async (event, context) => {
   try {
     // Consultar todos los invitados ordenados por los más recientes
     const query = `
-      SELECT id, "familiaidentificador", "familiades", "pases", "Pases" 
+      SELECT id, "familiaidentificador", "familiades", "pases"
       FROM "sarahienrique" 
       ORDER BY id DESC;
     `;
@@ -48,7 +48,7 @@ export const handler = async (event, context) => {
         totalInvitados: result.rows.length,
         // Calculamos el total de pases confirmados sumando la columna Pases
         totalPases: result.rows.reduce(
-          (sum, row) => sum + (parseInt(row.Pases, 10) || 0),
+          (sum, row) => sum + (parseInt(row.pases, 10) || 0),
           0,
         ),
         data: result.rows,
