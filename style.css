@@ -1,0 +1,85 @@
+.contenedor-sobre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.sobre {
+  position: relative;
+  width: 300px; /* Ajusta según el tamaño de tus imágenes */
+  height: 200px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+/* Imagen de la solapa superior */
+.sobre-solapa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  transform-origin: top;
+  transition: transform 0.6s ease-in-out, z-index 0.6s;
+}
+
+/* Imagen de la parte inferior del sobre */
+.sobre-abajo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Carta / Invitación */
+.InvitacionPequeña {
+  position: absolute;
+  top: 10px;
+  left: 5%;
+  width: 90%;
+  height: 180px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 1; /* Comienza dentro del sobre (detrás de la solapa y la base) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.8s ease-in-out 0.4s, z-index 0s 0.8s;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Texto dentro de la invitación */
+.escritura-letraporletra {
+  font-family: 'Georgia', serif; /* Cambia según tu tipografía */
+  font-size: 1.5rem;
+  color: #333;
+  border-right: 2px solid #333; /* Cursor de máquina de escribir */
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  animation: parpadeoCursor 0.75s step-end infinite;
+}
+
+@keyframes parpadeoCursor {
+  from, to { border-color: transparent }
+  50% { border-color: #333; }
+}
+
+/* --- ESTADOS AL DAR CLIC (.abierto) --- */
+
+/* 1. Rotar la solapa hacia arriba */
+.sobre.abierto .sobre-solapa {
+  transform: rotateX(180deg);
+  z-index: 0; /* Pasa detrás para no tapar la carta al abrirse */
+}
+
+/* 2. Desplazar la invitación hacia arriba y sobreponerla */
+.sobre.abierto .InvitacionPequeña {
+  transform: translateY(-120px); /* Se desplaza hacia arriba */
+  z-index: 4; /* Pasa al frente de todo el sobre */
+}
