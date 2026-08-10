@@ -89,41 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 // Selección de elementos
-const modalOverlay = document.getElementById("modalOverlay");
-const btnAbrirModal = document.getElementById("btnAbrirModal");
-const btnCerrarModal = document.getElementById("btnCerrarModal");
-const btnSiAsistire = document.getElementById("btnSiAsistire");
-const btnNoAsistire = document.getElementById("btnNoAsistire");
-
-// Abrir Modal
-btnAbrirModal.addEventListener("click", () => {
-  modalOverlay.classList.add("activo");
-});
-
-// Cerrar Modal al hacer clic en "Cerrar"
-btnCerrarModal.addEventListener("click", () => {
-  modalOverlay.classList.remove("activo");
-});
-
-// Cerrar Modal al hacer clic fuera del contenido
-modalOverlay.addEventListener("click", (e) => {
-  if (e.target === modalOverlay) {
-    modalOverlay.classList.remove("activo");
-  }
-});
-
-// Lógica de respuesta
-btnSiAsistire.addEventListener("click", () => {
-  alert("¡Muchas gracias por confirmar tu asistencia!");
-  modalOverlay.classList.remove("activo");
-  // Aquí puedes enviar la respuesta a WhatsApp o a tu base de datos
-});
-
-btnNoAsistire.addEventListener("click", () => {
-  alert("Lamentamos que no puedas acompañarnos. ¡Gracias por avisarnos!");
-  modalOverlay.classList.remove("activo");
-  // Aquí puedes registrar la inasistencia
-});
 
 ///obtener invitado
 const params = new URLSearchParams(window.location.search);
