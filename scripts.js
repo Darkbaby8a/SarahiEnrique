@@ -1,23 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
   const sobre = document.getElementById("botonAbrir");
+  const contenedorSobre = document.getElementById("contenedorSobre");
+  const seccionPrincipal = document.getElementById("seccionPrincipal");
   const textoElemento = document.getElementById("textoEscrito");
   const textoAEscribir = "Sarahí & Enrique";
   let abierto = false;
 
   sobre.addEventListener("click", () => {
-    if (abierto) return; // Evita activar la animación más de una vez consecutiva
+    if (abierto) return;
     abierto = true;
 
-    // Activar animación CSS del sobre e invitación
+    // 1. Abrir la solapa y elevar la invitación pequeña
     sobre.classList.add("abierto");
 
-    // Iniciar efecto mecanografiado después de que la invitación suba
+    // 2. Escribir el texto letra por letra después de abrir la solapa
     setTimeout(() => {
-      escribirTexto(textoElemento, textoAEscribir, 100);
-    }, 1000); // 1 segundo de espera (coincide con el tiempo de subida)
+      escribirTexto(textoElemento, textoAEscribir, 100, () => {
+        // 3. Una vez terminado el texto, esperar 1.2s y desplazar la pantalla al contenido principal
+        setTimeout(() => {
+          contenedorSobre.classList.add("oculto");
+          seccionPrincipal.classList.add("visible");
+        }, 1200);
+      });
+    }, 1000);
   });
 
-  function escribirTexto(elemento, texto, velocidad) {
+  function escribirTexto(elemento, texto, velocidad, callback) {
     let i = 0;
     elemento.textContent = "";
     const intervalo = setInterval(() => {
@@ -26,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         i++;
       } else {
         clearInterval(intervalo);
+        if (callback) callback();
       }
     }, velocidad);
   }

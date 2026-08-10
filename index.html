@@ -3,38 +3,41 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invitación - Sarahí & Enrique</title>
-  <!-- Fuentes elegantes para invitación -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
+  <!-- SOBRE A PANTALLA COMPLETA -->
   <div class="contenedor-sobre" id="contenedorSobre">
     <div class="sobre" id="botonAbrir">
-      <!-- Solapa superior (debe ir primero o manejarse con z-index) -->
       <img src="Imagenes/SolapaPartearriba.png" class="sobre-solapa" alt="Solapa Arriba">
-
-      <!-- Parte inferior del sobre -->
       <img src="Imagenes/SolapaParteAbajo.png" class="sobre-abajo" alt="Sobre Abajo">
 
-      <!-- Invitación interior -->
       <div class="InvitacionPequeña" id="invitacion">
         <span class="escritura-letraporletra" id="textoEscrito"></span>
       </div>
     </div>
+    <p class="instruccion-clic">Haz clic para abrir</p>
   </div>
 
+  <!-- SECCIÓN PRINCIPAL DE BIENVENIDA -->
+  <section class="seccion-principal" id="seccionPrincipal">
+    <h1 class="titulo-novios">Sarahí & Enrique</h1>
+    <p class="subtitulo-boda">Nuestra Boda</p>
 
-
+    <div class="tarjeta-foto">
+      <img src="Imagenes/ImagenPrincipal.jpg" alt="Sarahí & Enrique" class="imagen-principal">
+    </div>
+  </section>
   <script src="scripts.js"></script>
+
 </body>
 
 </html>
