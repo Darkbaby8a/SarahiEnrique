@@ -9,75 +9,50 @@ export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({
-        ok: false,
-        message: "Método no permitido.",
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ok: false, message: "Método no permitido." }),
     };
   }
 
   try {
-    const { familiaNombre, asistira } = JSON.parse(event.body);
+    const { familiaNombre, asistira } = JSON.parse(event.body || "{}");
 
-    if (!familiaNombre || typeof asistira !== "boolean") {
+    if (!familiaNombre) {
       return {
         statusCode: 400,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ok: false,
-          message: "Datos incompletos.",
+          message: "Nombre de familia requerido.",
         }),
       };
     }
 
-    const acepto = asistira;
-    const rechazo = !asistira;
-
-    const result = await pool.query(
+    await pool.query(
       `
-            UPDATE "IsmaLuisa"
-            SET
-                acepto = $1,
-                rechazo = $2,
-                fechaaceptado = NOW()
-            WHERE "familiaNombre" = $3
-            RETURNING id;
-        `,
-      [acepto, rechazo, familiaNombre],
+        UPDATE "sarahienrique"
+        SET 
+          acepto = $1,
+          rechazo = $2
+        WHERE "familiaidentificador" = $3;
+      `,
+      [asistira === true, asistira === false, familiaNombre],
     );
-
-    if (result.rowCount === 0) {
-      return {
-        statusCode: 404,
-        body: JSON.stringify({
-          ok: false,
-          message: "Invitación no encontrada.",
-        }),
-      };
-    }
 
     return {
       statusCode: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ok: true,
-        message: asistira ? "Asistencia confirmada." : "Asistencia rechazada.",
-        asistira,
+        message: "Respuesta actualizada correctamente.",
       }),
     };
   } catch (error) {
-    console.error(error);
-
+    console.error("Error al actualizar asistencia:", error);
     return {
       statusCode: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ok: false,
-        error: error.message,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ok: false, error: error.message }),
     };
   }
 };

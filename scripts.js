@@ -89,8 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 // Selección de elementos
-
-///obtener invitado
 const params = new URLSearchParams(window.location.search);
 const familia = params.get("familia");
 
@@ -142,7 +140,10 @@ if (!familia) {
 }
 
 function renderizarSeccionConfirmacion(invitado) {
-  // 1. Inyectamos la estructura HTML en el contenedor
+  let textoBoton = "Confirmar Asistencia";
+  if (invitado.acepto) textoBoton = "Asistencia Confirmada";
+  if (invitado.rechazo) textoBoton = "Inasistencia Registrada";
+
   contenedor.innerHTML = `
     <!-- Sección Principal de Confirmación -->
     <section class="confirmacionInvitacion">
@@ -155,9 +156,7 @@ function renderizarSeccionConfirmacion(invitado) {
           <span id="CantidadPases" class="cantidad-pases">Pases asignados: ${invitado.Pases}</span>
         </div>
 
-        <button id="btnAbrirModal" class="boton-confirmar">
-          ${invitado.acepto ? "Asistencia Confirmada" : invitado.rechazo ? "Inasistencia Registrada" : "Confirmar Asistencia"}
-        </button>
+        <button id="btnAbrirModal" class="boton-confirmar">${textoBoton}</button>
       </div>
     </section>
 
@@ -177,7 +176,6 @@ function renderizarSeccionConfirmacion(invitado) {
     </div>
   `;
 
-  // 2. Asignamos los eventos del Modal
   inicializarEventosModal();
 }
 
@@ -188,36 +186,78 @@ function inicializarEventosModal() {
   const btnSiAsistire = document.getElementById("btnSiAsistire");
   const btnNoAsistire = document.getElementById("btnNoAsistire");
 
-  // Abrir Modal
   btnAbrirModal.addEventListener("click", () => {
     modalOverlay.classList.add("activo");
   });
 
-  // Cerrar Modal
   btnCerrarModal.addEventListener("click", () => {
     modalOverlay.classList.remove("activo");
   });
 
-  // Cerrar al hacer clic fuera del recuadro
   modalOverlay.addEventListener("click", (e) => {
     if (e.target === modalOverlay) {
       modalOverlay.classList.remove("activo");
     }
   });
 
-  // Acción: Sí Asistiré
-  btnSiAsistire.addEventListener("click", () => {
-    modalOverlay.classList.remove("activo");
-    document.getElementById("btnAbrirModal").innerText =
-      "Asistencia Confirmada";
-    // Aquí puedes invocar la Netlify Function para guardar 'acepto = true'
-  });
+  btnSiAsistire.addEventListener("click", () => enviarRespuesta(true));
+  btnNoAsistire.addEventListener("click", () => enviarRespuesta(false));
+}
 
-  // Acción: No Asistiré
-  btnNoAsistire.addEventListener("click", () => {
+async function enviarRespuesta(asistira) {
+  const modalOverlay = document.getElementById("modalOverlay");
+  const btnSiAsistire = document.getElementById("btnSiAsistire");
+  const btnNoAsistire = document.getElementById("btnNoAsistire");
+  const btnAbrirModal = document.getElementById("btnAbrirModal");
+
+  // Bloqueamos los botones mientras dura el fecth
+  btnSiAsistire.disabled = true;
+  btnNoAsistire.disabled = true;
+
+  try {
+    const response = await fetch("/.netlify/functions/aceptarinvitados", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        familiaNombre: datosInvitado.familiaNombre,
+        asistira: asistira,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+
+    await response.json();
+
+    // Actualizamos el objeto local
+    datosInvitado.acepto = asistira;
+    datosInvitado.rechazo = !asistira;
+
+    // Actualizamos la UI
     modalOverlay.classList.remove("activo");
-    document.getElementById("btnAbrirModal").innerText =
-      "Inasistencia Registrada";
-    // Aquí puedes invocar la Netlify Function para guardar 'rechazo = true'
-  });
+    btnAbrirModal.innerText = asistira
+      ? "Asistencia Confirmada"
+      : "Inasistencia Registrada";
+
+    mostrarMensaje(asistira);
+  } catch (error) {
+    console.error(error);
+    alert("No fue posible registrar tu respuesta. Inténtalo nuevamente.");
+  } finally {
+    btnSiAsistire.disabled = false;
+    btnNoAsistire.disabled = false;
+  }
+}
+
+function mostrarMensaje(asistira) {
+  if (asistira) {
+    alert(
+      "¡Muchas gracias por confirmar! Nos dará mucho gusto compartir este día contigo.",
+    );
+  } else {
+    alert(
+      "Muchas gracias por avisarnos. Lamentamos que no puedas acompañarnos.",
+    );
+  }
 }
