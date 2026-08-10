@@ -375,3 +375,490 @@ font-family: 'Great Vibes', cursive;
   z-index: 1;
   left: -315px;
 }
+
+/* --- SECCIÓN SAVE THE DATE ---
+   Fondo crema:           rgb(234, 228, 204)
+   Texto / Detalles verde: rgb(55, 57, 36)
+   Acento bronce/dorado:  rgb(109, 83, 42)
+*/
+
+.seccion-save-date {
+  width: 100vw;
+  min-height: 100dvh;
+  background-color: rgb(234, 228, 204);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 15px;
+  box-sizing: border-box;
+}
+
+/* Encabezado superior con adornos */
+.parte-arriba {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.titulo-save {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.8rem;
+  color: rgb(55, 57, 36);
+  text-align: center;
+  font-weight: normal;
+}
+
+.esquinero {
+  width: 35px;
+  height: auto;
+  opacity: 0.8;
+}
+
+.esquineroizquierda90grados {
+  transform: rotate(90deg);
+}
+
+.esquineroizquierda180grados {
+  transform: rotate(180deg);
+}
+
+/* Panel central de fotos y fecha */
+.panelFecha.displayflex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 380px;
+  height: 65vh; /* Ocupa el 65% del alto de la pantalla */
+}
+
+/* Columnas individuales con foto de fondo */
+.columna-foto {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(55, 57, 36, 0.18);
+  border: 1px solid rgba(109, 83, 42, 0.2);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+/* Desplazamiento leve de la foto central para un efecto visual dinámico */
+.fotoalargadamedio {
+  transform: translateY(-12px);
+}
+
+/* Sombra gradual en el fondo de las fotos para resaltar los números */
+.overlay-foto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(55, 57, 36, 0.75) 100%);
+  z-index: 1;
+}
+
+/* Números de la fecha */
+.fechaabajo {
+  position: relative;
+  z-index: 2;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgb(234, 228, 204);
+  letter-spacing: 1px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+/* --- SECCIÓN DE EVENTOS Y UBICACIONES ---
+   Verde oliva principal: rgb(55, 57, 36)
+   Crema / Marfil:       rgb(234, 228, 204)
+   Dorado / Bronce:      rgb(109, 83, 42)
+*/
+
+.seccion-eventos {
+  width: 100vw;
+  min-height: 100dvh;
+  background-color: rgb(234, 228, 204);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+/* Tarjetas contenedor de cada evento */
+.tarjeta-evento {
+  width: 100%;
+  max-width: 350px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(55, 57, 36, 0.1);
+  border: 1px solid rgba(109, 83, 42, 0.2);
+}
+
+/* Iconos de las ubicaciones */
+.icono-evento {
+  width: 50px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+/* Títulos de los eventos */
+.minititulo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  color: rgb(55, 57, 36);
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+
+/* Direcciones y horarios */
+.direcciondiscursopublico {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: #4a4a4a;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.hora-evento {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 600;
+  color: rgb(109, 83, 42);
+  letter-spacing: 1px;
+}
+
+/* Botones de Google Maps */
+.boton-direccion {
+  display: inline-block;
+  padding: 10px 24px;
+  background-color: rgb(55, 57, 36);
+  color: rgb(234, 228, 204);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(55, 57, 36, 0.2);
+}
+
+.boton-direccion:active {
+  transform: scale(0.97);
+  background-color: rgb(109, 83, 42);
+}
+/* --- GALERÍA EN MOSAICO CON DETALLES DORADOS Y MARCOS DISCONTINUOS --- */
+
+.galeriaflex {
+  width: 100vw;
+  min-height: 100dvh;
+  /* Fondo crema con patrón sutil de destellos/detalles dorados */
+  background-color: rgb(234, 228, 204);
+  background-image: 
+    radial-gradient(circle, rgba(109, 83, 42, 0.25) 1px, transparent 1px),
+    radial-gradient(circle, rgba(109, 83, 42, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 14px;
+  box-sizing: border-box;
+}
+
+/* Columnas de la galería */
+.seccion-columna {
+  flex: 1;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Contenedor o clase de la imagen con marco no continuo */
+.img-galeria {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  box-sizing: border-box;
+  
+  /* MARCO DISCONTINUO: Esquinas doradas cortadas usando border-image */
+  border: 4px solid transparent;
+  border-image: linear-gradient(
+    to bottom right,
+    rgb(109, 83, 42) 0%,
+    rgb(109, 83, 42) 20%,
+    transparent 20%,
+    transparent 80%,
+    rgb(109, 83, 42) 80%,
+    rgb(109, 83, 42) 100%
+  ) 1;
+  
+  box-shadow: 0 6px 16px rgba(55, 57, 36, 0.2);
+}
+
+/* Proporciones de altura */
+.height20 {
+  height: 25%;
+}
+
+.height80 {
+  height: 75%;
+}
+
+.height100 {
+  height: 100%;
+}
+/* --- SECCIÓN ITINERARIO VERDE OLIVA --- 
+   Verde oliva: rgb(55, 57, 36)
+   Crema:       rgb(234, 228, 204)
+   Dorado:      rgb(180, 142, 85)
+*/
+
+.background-verde-itinerario {
+  width: 100vw;
+  min-height: 100dvh;
+  background-color: rgb(55, 57, 36);
+  color: rgb(234, 228, 204);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+/* Encabezados */
+.titulos-itinerario {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.titulo-grande {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.2rem;
+  font-weight: normal;
+  color: rgb(234, 228, 204);
+  margin: 0;
+}
+
+.subtitulo-fecha {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgb(180, 142, 85);
+  display: block;
+  margin-top: 5px;
+}
+
+/* Estructura vertical */
+.itinerario-vertical {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fila-horario {
+  display: flex;
+  align-items: center;
+  min-height: 85px;
+  position: relative;
+}
+
+/* Columna Izquierda: Icono + Hora */
+.lado-izquierdo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: 15px;
+}
+
+.icono-itinerario {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Mantiene los iconos en color blanco/crema */
+  margin-bottom: 4px;
+}
+
+.hora-texto {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: rgb(180, 142, 85);
+  letter-spacing: 1px;
+}
+
+/* Columna Medio: Línea y Corazón */
+.lado-medio {
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  align-self: stretch;
+}
+
+.linea-vertical {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(180, 142, 85, 0.4);
+  z-index: 1;
+}
+
+.corazon-icono {
+  position: relative;
+  z-index: 2;
+  background-color: rgb(55, 57, 36);
+  color: rgb(180, 142, 85);
+  font-size: 0.75rem;
+  padding: 4px 0;
+}
+
+/* Columna Derecha: Nombre del Evento */
+.lado-derecho {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.evento-texto {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgb(234, 228, 204);
+  letter-spacing: 0.5px;
+}
+
+/* --- SECCIÓN CUENTA REGRESIVA CON GRADIENTE Y RAMAS OLIVO --- */
+
+.cuentaregresiva {
+  position: relative;
+  width: 100vw;
+  /* Gradiente elegante entre verde olivo claro y crema */
+  background: linear-gradient(
+    180deg, 
+    rgba(126, 140, 84, 0.15) 0%, 
+    rgb(234, 228, 204) 50%, 
+    rgba(126, 140, 84, 0.12) 100%
+  );
+  padding: 70px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden; /* Evita desbordamiento de las ramas en móvil */
+}
+
+/* Ilustraciones SVG de Ramas de Olivo */
+.rama-olivo {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  opacity: 0.25; /* Transparencia delicada para no competir con los números */
+  pointer-events: none;
+}
+
+.rama-izquierda {
+  top: 10px;
+  left: -15px;
+  transform: rotate(-15deg);
+}
+
+.rama-derecha {
+  bottom: 10px;
+  right: -15px;
+  transform: rotate(15deg);
+}
+
+/* Título */
+.colordorado {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.2rem;
+  font-weight: normal;
+  color: rgb(55, 57, 36); /* Verde olivo oscuro para contraste */
+  margin: 0 0 35px 0;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Contenedores de tiempo */
+.displayflex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 2;
+}
+
+.caja-tiempo {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px); /* Efecto cristal translúcido */
+  border: 1px solid rgba(126, 140, 84, 0.4); /* Borde con verde olivo #7E8C54 */
+  border-radius: 14px;
+  padding: 16px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 6px 15px rgba(55, 57, 36, 0.06);
+}
+
+.numero {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: rgb(55, 57, 36);
+  line-height: 1;
+}
+
+.etiqueta {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #7E8C54; /* Color olivo principal */
+  margin-top: 8px;
+  font-weight: 500;
+}

@@ -38,4 +38,41 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, velocidad);
   }
+  // Fecha objetivo: 27 de Septiembre de 2026 a las 3:30 PM
+  const fechaEvento = new Date("September 27, 2026 15:30:00").getTime();
+
+  function actualizarCuentaRegresiva() {
+    const ahora = new Date().getTime();
+    const diferencia = fechaEvento - ahora;
+
+    if (diferencia > 0) {
+      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor(
+        (diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(dias).padStart(2, "0");
+      document.getElementById("hours").innerText = String(horas).padStart(
+        2,
+        "0",
+      );
+      document.getElementById("minutes").innerText = String(minutos).padStart(
+        2,
+        "0",
+      );
+      document.getElementById("seconds").innerText = String(segundos).padStart(
+        2,
+        "0",
+      );
+    } else {
+      document.querySelector(".cuentaregresiva").innerHTML =
+        "<h2 class='colordorado'>¡El gran día ha llegado!</h2>";
+    }
+  }
+
+  // Ejecutar cada segundo
+  setInterval(actualizarCuentaRegresiva, 1000);
+  actualizarCuentaRegresiva();
 });
