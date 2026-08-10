@@ -6,33 +6,37 @@ const pool = new Pool({
 });
 
 export const handler = async (event) => {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json",
+  };
+
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-      },
-      body: "",
+      headers,
+      body: JSON.stringify({ message: "OK" }),
     };
   }
 
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({
-        error: "Método no permitido.",
-      }),
+      headers,
+      body: JSON.stringify({ error: "Método no permitido." }),
     };
   }
 
   try {
-    const { id } = JSON.parse(event.body);
+    const body = JSON.parse(event.body || "{}");
+    const id = body.id;
 
     if (!id) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({
           error: "Debe proporcionar el id.",
         }),
@@ -40,16 +44,17 @@ export const handler = async (event) => {
     }
 
     const query = `
-            DELETE FROM "IsmaLuisa"
-            WHERE id = $1
-            RETURNING id;
-        `;
+      DELETE FROM "IsmaLuisa"
+      WHERE id = $1
+      RETURNING id;
+    `;
 
     const result = await pool.query(query, [parseInt(id, 10)]);
 
     if (result.rowCount === 0) {
       return {
         statusCode: 404,
+        headers,
         body: JSON.stringify({
           error: "El invitado no existe.",
         }),
@@ -58,9 +63,7 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         success: true,
         message: "Invitado eliminado correctamente.",
@@ -68,13 +71,11 @@ export const handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.error(error);
+    console.error("Error al eliminar invitado:", error);
 
     return {
       statusCode: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         error: "Error interno del servidor.",
         details: error.message,

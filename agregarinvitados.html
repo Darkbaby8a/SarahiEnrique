@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Boda</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            color: #000000;
+            padding: 40px 20px;
+        }
+
+        .contenedor-admin {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Toast mensaje copiado */
+        .mensaje-copiado {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #7b1e2b;
+            color: #f8ead5;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-family: "Montserrat", sans-serif;
+            opacity: 0;
+            visibility: hidden;
+            transition: .4s ease;
+            z-index: 99999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+        }
+
+        .mensaje-copiado.mostrar {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Encabezado Principal */
+        .header-admin {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #ece7e5;
+            padding-bottom: 30px;
+        }
+
+        .header-admin h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: #7A1632;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .header-admin p {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Layout */
+        .layout-admin {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .columna-formulario {
+            flex: 1;
+            position: sticky;
+            top: 20px;
+            background: #ffffff;
+            border: 1px solid rgba(122, 22, 50, 0.15);
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(122, 22, 50, 0.02);
+        }
+
+        .columna-formulario::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #7A1632;
+        }
+
+        .columna-formulario h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #000000;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .columna-tabla {
+            flex: 2;
+        }
+
+        /* Metric Cards */
+        .resumen-cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #ece7e5;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7A1632;
+            margin-bottom: 5px;
+        }
+
+        .card .numero {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        /* Form Controls */
+        .formulario-boda {
+            width: 100%;
+        }
+
+        .grupo-formulario {
+            margin-bottom: 20px;
+        }
+
+        .label-boda {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #7A1632;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .input-boda {
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #ece7e5;
+            border-radius: 0px;
+            padding: 14px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .input-boda:focus {
+            outline: none;
+            border-color: #7A1632;
+            box-shadow: 0 4px 12px rgba(122, 22, 50, 0.05);
+        }
+
+        .btn-modal-principal {
+            width: 100%;
+            background: #7A1632;
+            color: #ffffff;
+            border: 1px solid #7A1632;
+            padding: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: .3s;
+            margin-top: 10px;
+        }
+
+        .btn-modal-principal:hover {
+            background: #5b1025;
+            border-color: #5b1025;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancelar {
+            width: 100%;
+            background: transparent;
+            color: #666;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: .3s;
+        }
+
+        .btn-cancelar:hover {
+            background: #f5f5f5;
+        }
+
+        /* Table Design */
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #ece7e5;
+        }
+
+        .tabla-invitados {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .tabla-invitados thead {
+            background: #7A1632;
+            color: #ffffff;
+        }
+
+        .tabla-invitados th {
+            padding: 16px 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .tabla-invitados td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #ece7e5;
+            color: #000000;
+            vertical-align: middle;
+        }
+
+        .tabla-invitados tr:hover {
+            background: rgba(122, 22, 50, 0.02);
+        }
+
+        /* Buttons & Badges inside table */
+        .btn-editar {
+            background: #7A1632;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: .8rem;
+            transition: .3s;
+        }
+
+        .btn-editar:hover {
+            background: #5d0f26;
+        }
+
+        .btn-eliminar {
+            background: #b71c1c;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            margin-left: 4px;
+            transition: .3s;
+        }
+
+        .btn-eliminar:hover {
+            background: #8f1515;
+        }
+
+        .btn-copiar-link {
+            background: #faf9f8;
+            border: 1px solid #ece7e5;
+            color: #7A1632;
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn-copiar-link:hover {
+            background: #7A1632;
+            color: #ffffff;
+        }
+
+        /* Badges de Estatus */
+        .badge-estatus {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-estatus.acepto {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .badge-estatus.rechazo {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .badge-estatus.pendiente {
+            background: #fff8e1;
+            color: #f57f17;
+            border: 1px solid #ffe082;
+        }
+
+        .cargando {
+            text-align: center;
+            padding: 40px;
+            font-style: italic;
+            color: #888;
+        }
+
+        @media (max-width: 900px) {
+            .layout-admin {
+                flex-direction: column;
+            }
+
+            .columna-formulario,
+            .columna-tabla {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor-admin">
+
+        <header class="header-admin">
+            <h1>Panel de Control de Asistencia</h1>
+            <p>Gestión interna de invitados confirmados</p>
+        </header>
+
+        <div class="layout-admin">
+
+            <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+            <div class="columna-formulario">
+                <h2 id="tituloFormulario">Agregar Invitado</h2>
+
+                <form id="formConfirmarBoda" class="formulario-boda">
+                    <div class="grupo-formulario">
+                        <label for="familiaDesc" class="label-boda">Invitado / Familia</label>
+                        <input type="text" id="familiaDesc" name="familiaDesc" class="input-boda"
+                            placeholder="Ej. Familia Martínez López" required>
+                    </div>
+
+                    <div class="grupo-formulario">
+                        <label for="familiaNombre" class="label-boda">Clave URL / Parámetro</label>
+                        <input type="text" id="familiaNombre" name="familiaNombre" class="input-boda"
+                            placeholder="Ej. martinez-lopez" required>
+                    </div>
+
+                    <div class="grupo-formulario">
+                        <label for="pases" class="label-boda">Pases</label>
+                        <input type="number" id="pases" name="pases" class="input-boda" min="1" max="15"
+                            placeholder="Ej. 2" required>
+                    </div>
+
+                    <button type="submit" id="btnConfirmarModal" class="btn-modal-principal">
+                        Registrar Asistencia
+                    </button>
+                    <button type="button" id="btnCancelarEdicion" class="btn-cancelar" style="display: none;"
+                        onclick="cancelarEdicion()">
+                        Cancelar Edición
+                    </button>
+                </form>
+            </div>
+
+            <!-- COLUMNA DERECHA: MÉTRICAS Y TABLA -->
+            <div class="columna-tabla">
+
+                <div class="resumen-cards">
+                    <div class="card">
+                        <h3>Familias / Grupos</h3>
+                        <div class="numero" id="txtTotalFamilias">0</div>
+                    </div>
+                    <div class="card">
+                        <h3>Total Pases</h3>
+                        <div class="numero" id="txtTotalPases">0</div>
+                    </div>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-invitados">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Invitado / Familia</th>
+                                <th>Pases</th>
+                                <th>Estatus</th>
+                                <th>URL</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCuerpo">
+                            <tr>
+                                <td colspan="6" class="cargando">Cargando lista de asistencia...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="mensajeCopiado" class="mensaje-copiado">
+        Enlace copiado correctamente
+    </div>
+
+    <script>
+        const tbody = document.getElementById("tablaCuerpo");
+        const txtFamilias = document.getElementById("txtTotalFamilias");
+        const txtPases = document.getElementById("txtTotalPases");
+        const formBoda = document.getElementById("formConfirmarBoda");
+        const btnSubmit = document.getElementById("btnConfirmarModal");
+        const btnCancelar = document.getElementById("btnCancelarEdicion");
+        const tituloFormulario = document.getElementById("tituloFormulario");
+
+        let datosGlobal = [];
+        let idEditando = null;
+
+        //==============================
+        // CARGAR TABLA
+        //==============================
+        function cargarInvitados() {
+            fetch("/.netlify/functions/ObtenerInvitados")
+                .then(response => {
+                    if (!response.ok) throw new Error("Error al obtener datos");
+                    return response.json();
+                })
+                .then(res => {
+                    datosGlobal = res.data || [];
+
+                    txtFamilias.textContent = res.totalInvitados ?? datosGlobal.length;
+                    txtPases.textContent = res.totalPases ?? datosGlobal.reduce((acc, curr) => acc + Number(curr.Pases || 0), 0);
+
+                    tbody.innerHTML = "";
+
+                    if (datosGlobal.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="6" style="text-align:center;padding:30px;color:#666;">
+                                    No hay invitados registrados.
+                                </td>
+                            </tr>`;
+                        return;
+                    }
+
+                    datosGlobal.forEach(invitado => {
+                        let estadoTexto = "Pendiente";
+                        let estadoClase = "pendiente";
+
+                        if (invitado.acepto == 1) {
+                            estadoTexto = "Aceptó";
+                            estadoClase = "acepto";
+                        } else if (invitado.rechazo == 1) {
+                            estadoTexto = "Rechazó";
+                            estadoClase = "rechazo";
+                        }
+
+                        const fila = document.createElement("tr");
+
+                        fila.innerHTML = `
+                            <td><strong>#${invitado.id}</strong></td>
+                            <td>${invitado.FamiliaDesc || ''}</td>
+                            <td><strong>${invitado.Pases || 0}</strong></td>
+                            <td><span class="badge-estatus ${estadoClase}">${estadoTexto}</span></td>
+                            <td>
+                                <button class="btn-copiar-link" onclick="copiarLink('https://ismayluisa.netlify.app/?familia=${encodeURIComponent(invitado.familiaNombre || '')}')">
+                                    📋 Copiar
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn-editar" onclick="editarInvitado(${invitado.id})">✏️</button>
+                                <button class="btn-eliminar" onclick="eliminarInvitado(${invitado.id})">🗑️</button>
+                            </td>
+                        `;
+
+                        tbody.appendChild(fila);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="color:red;text-align:center;padding:30px;">
+                                Error al cargar la lista de invitados.
+                            </td>
+                        </tr>`;
+                });
+        }
+
+        //==============================
+        // EDITAR
+        //==============================
+        function editarInvitado(id) {
+            const invitado = datosGlobal.find(x => x.id == id);
+            if (!invitado) return;
+
+            idEditando = id;
+
+            document.getElementById("familiaDesc").value = invitado.FamiliaDesc || "";
+            document.getElementById("familiaNombre").value = invitado.familiaNombre || "";
+            document.getElementById("pases").value = invitado.Pases || 1;
+
+            tituloFormulario.textContent = "Editar Invitado";
+            btnSubmit.textContent = "Guardar Cambios";
+            btnCancelar.style.display = "block";
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        //==============================
+        // CANCELAR EDICION
+        //==============================
+        function cancelarEdicion() {
+            idEditando = null;
+            formBoda.reset();
+            tituloFormulario.textContent = "Agregar Invitado";
+            btnSubmit.textContent = "Registrar Asistencia";
+            btnCancelar.style.display = "none";
+        }
+
+        //==============================
+        // GUARDAR (CREAR O EDITAR)
+        //==============================
+        formBoda.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = "Procesando...";
+
+            const datos = {
+                id: idEditando,
+                FamiliaDesc: document.getElementById("familiaDesc").value,
+                familiaNombre: document.getElementById("familiaNombre").value,
+                Pases: parseInt(document.getElementById("pases").value)
+            };
+
+            const url = idEditando
+                ? "/.netlify/functions/EditarInvitado"
+                : "/.netlify/functions/AgregarInvitado";
+
+            fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(datos)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+                    return response.json();
+                })
+                .then(res => {
+                    cancelarEdicion();
+                    cargarInvitados();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Ocurrió un error al procesar la solicitud.");
+                })
+                .finally(() => {
+                    btnSubmit.disabled = false;
+                    if (!idEditando) {
+                        btnSubmit.textContent = "Registrar Asistencia";
+                    }
+                });
+        });
+
+        //==============================
+        // ELIMINAR
+        //==============================
+        function eliminarInvitado(id) {
+            if (!confirm("¿Deseas eliminar este invitado?")) return;
+
+            fetch("/.netlify/functions/EliminarInvitado", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: id })
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Error al eliminar");
+                    return res.json();
+                })
+                .then(() => {
+                    cargarInvitados();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("No fue posible eliminar el invitado.");
+                });
+        }
+
+        //==============================
+        // COPIAR LINK
+        //==============================
+        function copiarLink(texto) {
+            navigator.clipboard.writeText(texto)
+                .then(() => mostrarNotificacion("Enlace copiado correctamente"))
+                .catch(() => mostrarNotificacion("No fue posible copiar"));
+        }
+
+        function mostrarNotificacion(msj) {
+            const mensaje = document.getElementById("mensajeCopiado");
+            mensaje.textContent = msj;
+            mensaje.classList.add("mostrar");
+
+            setTimeout(() => {
+                mensaje.classList.remove("mostrar");
+            }, 2500);
+        }
+
+        //==============================
+        // INICIO
+        //==============================
+        document.addEventListener("DOMContentLoaded", cargarInvitados);
+    </script>
+</body>
+
+</html>

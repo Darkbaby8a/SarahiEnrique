@@ -6,56 +6,72 @@ const pool = new Pool({
 });
 
 export const handler = async (event) => {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json",
+  };
+
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-      },
-      body: "",
+      headers,
+      body: JSON.stringify({ message: "OK" }),
     };
   }
 
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({
-        error: "Método no permitido.",
-      }),
+      headers,
+      body: JSON.stringify({ error: "Método no permitido." }),
     };
   }
 
   try {
-    const { id, FamiliaDesc, Mesa, Pases } = JSON.parse(event.body);
+    const body = JSON.parse(event.body || "{}");
 
-    if (!id || !FamiliaDesc || !Mesa || Pases === undefined) {
+    // Sincronización con las propiedades que envía el frontend
+    const id = body.id;
+    const familiaDesc = body.FamiliaDesc || body.familiades;
+    const familiaNombre = body.familiaNombre || body.familiaidentificador;
+    const pases = body.Pases !== undefined ? body.Pases : body.pases;
+
+    if (!id || !familiaDesc || !familiaNombre || pases === undefined) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({
-          error: "Faltan campos obligatorios.",
+          error:
+            "Faltan campos obligatorios (id, FamiliaDesc, familiaNombre, Pases).",
         }),
       };
     }
 
     const query = `
-            UPDATE "IsmaLuisa"
-            SET
-                "FamiliaDesc" = $1,
-                "Mesa" = $2,
-                "Pases" = $3
-            WHERE id = $4
-            RETURNING id;
-        `;
+      UPDATE "IsmaLuisa"
+      SET
+        "FamiliaDesc" = $1,
+        "familiaidentificador" = $2,
+        "Pases" = $3
+      WHERE id = $4
+      RETURNING id;
+    `;
 
-    const values = [FamiliaDesc, Mesa, parseInt(Pases, 10), parseInt(id, 10)];
+    const values = [
+      familiaDesc,
+      familiaNombre,
+      parseInt(pases, 10),
+      parseInt(id, 10),
+    ];
 
     const result = await pool.query(query, values);
 
     if (result.rowCount === 0) {
       return {
         statusCode: 404,
+        headers,
         body: JSON.stringify({
           error: "No se encontró el invitado.",
         }),
@@ -64,9 +80,7 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         success: true,
         message: "Invitado actualizado correctamente.",
@@ -74,13 +88,11 @@ export const handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.error(error);
+    console.error("Error al actualizar invitado:", error);
 
     return {
       statusCode: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         error: "Error interno del servidor.",
         details: error.message,
