@@ -567,10 +567,10 @@
 
             idEditando = id;
 
-            inputFamiliaDesc.value = invitado.FamiliaDesc || "";
-            inputFamiliaNombre.value = invitado.familiaNombre || "";
-            inputFamiliaNombre.removeAttribute("readonly");
-            document.getElementById("pases").value = invitado.Pases || 1;
+            inputFamiliaDesc.value = invitado.familiades || "";
+            inputFamiliaNombre.value = invitado.familiaidentificador || "";
+
+            document.getElementById("pases").value = invitado.pases || 1;
 
             tituloFormulario.textContent = "Editar Invitado";
             btnSubmit.textContent = "Guardar Cambios";
