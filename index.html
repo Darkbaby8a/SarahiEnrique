@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animación de Sobre</title>
+  <style>
+    /* Estilos generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f7f5ee; /* Fondo claro similar al del video */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Georgia', serif;
+    }
+
+    /* Contenedor Principal del Sobre */
+    .envelope-wrapper {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      margin-top: 80px; /* Espacio para cuando la solapa se abra hacia arriba */
+    }
+
+    /* Cuerpo base del sobre */
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #a49786; /* Color marrón del sobre */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+    }
+
+    /* Carta / Tarjeta interior */
+    .card {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      width: 290px;
+      height: 190px;
+      background-color: #fdfcf7;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    /* Texto dentro de la carta */
+    .names {
+      font-family: 'Brush Script MT', 'Great Vibes', cursive, serif;
+      font-size: 2rem;
+      color: #4a4238;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .date {
+      font-size: 0.9rem;
+      color: #6e6458;
+      margin-top: 10px;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out 0.8s; /* Aparece después del nombre */
+    }
+
+    /* Solapa superior desplegable */
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 115px solid #948776; /* Solapa cerrada hacia abajo */
+      transform-origin: top;
+      transition: transform 1.2s ease-in-out;
+      z-index: 3;
+    }
+
+    /* Caras triangulares del frente del sobre */
+    .pocket-left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid #a89b8a;
+      border-top: 110px solid transparent;
+      border-bottom: 110px solid #a89b8a;
+      z-index: 2;
+    }
+
+    .pocket-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-right: 160px solid #a09382;
+      border-top: 110px solid transparent;
+      border-bottom: 110px solid #a09382;
+      z-index: 2;
+    }
+
+    .pocket-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-bottom: 115px solid #b2a594;
+      z-index: 2;
+    }
+
+    /* Sello dorado */
+    .seal {
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 42px;
+      height: 42px;
+      background: radial-gradient(circle, #ffe28a 0%, #d4af37 60%, #aa820a 100%);
+      border-radius: 50%;
+      border: 2px dashed #b89218;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      z-index: 4;
+      cursor: pointer;
+      transition: opacity 0.5s ease;
+    }
+
+    /* --- Clases activadas por JavaScript --- */
+    .envelope-wrapper.open .flap {
+      transform: rotateX(180deg);
+      z-index: 0; /* Pasa detrás de la carta al abrirse */
+    }
+
+    .envelope-wrapper.open .seal {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .envelope-wrapper.open .names,
+    .envelope-wrapper.open .date {
+      opacity: 1;
+    }
+
+    /* Botón opcional de reinicio */
+    .btn-replay {
+      margin-top: 40px;
+      padding: 10px 20px;
+      background-color: #8c7f6e;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.3s;
+    }
+
+    .btn-replay:hover {
+      background-color: #6e6354;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope-wrapper" id="envelopeWrapper">
+    <div class="envelope">
+      <div class="card">
+        <div class="names">Sarahí & Enrique</div>
+        <div class="date">27.09.2026</div>
+      </div>
+
+      <div class="flap"></div>
+      <div class="pocket-left"></div>
+      <div class="pocket-right"></div>
+      <div class="pocket-bottom"></div>
+
+      <div class="seal" id="seal"></div>
+    </div>
+  </div>
+
+  <button class="btn-replay" onclick="toggleEnvelope()">Abrir / Cerrar</button>
+
+  <script>
+    const envelopeWrapper = document.getElementById('envelopeWrapper');
+    const seal = document.getElementById('seal');
+
+    function toggleEnvelope() {
+      envelopeWrapper.classList.toggle('open');
+    }
+
+    // Abre automáticamente al hacer clic en el sello
+    seal.addEventListener('click', () => {
+      envelopeWrapper.classList.add('open');
+    });
+
+    // Inicia la animación automáticamente después de 1 segundo
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        envelopeWrapper.classList.add('open');
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
