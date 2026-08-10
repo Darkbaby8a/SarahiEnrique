@@ -133,17 +133,19 @@ html, body {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
 }
-
-/* --- SECCIÓN PRINCIPAL DE BIENVENIDA --- */
+/* --- SECCIÓN CON IMAGEN A PANTALLA COMPLETA --- */
 .seccion-principal {
-  min-height: 100dvh;
-  width: 100%;
+  position: relative;
+  width: 100vw;
+  height: 100dvh; /* Ocupa el 100% del alto real en pantallas móviles */
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Alinea contenido arriba y abajo */
   align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
+  padding: 50px 20px;
   text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
@@ -154,104 +156,74 @@ html, body {
   transform: translateY(0);
 }
 
+/* IMAGEN DE FONDO PANTALLA COMPLETA */
+.imagen-principal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garantiza que la imagen llene la pantalla sin deformarse */
+  object-position: center;
+  z-index: 1;
+}
+
+/* CAPA DE SOMBRA SUTIL (Mejora la lectura del texto) */
+.overlay-sombra {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg, 
+    rgba(0,0,0,0.45) 0%, 
+    rgba(0,0,0,0.1) 40%, 
+    rgba(0,0,0,0.1) 60%, 
+    rgba(0,0,0,0.5) 100%
+  );
+  z-index: 2;
+}
+
+/* TEXTO SUPERIOR (NOMBRES) */
+.encabezado-novios {
+  position: relative;
+  z-index: 3;
+  margin-top: 20px;
+}
+
 .titulo-novios {
   font-family: 'Great Vibes', cursive;
-  font-size: 3.5rem;
-  color: #5a4a3e;
+  font-size: 3.8rem;
+  color: rgb(234, 228, 204); /* Tono crema de tu paleta */
   line-height: 1.1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .subtitulo-boda {
   font-size: 0.85rem;
-  letter-spacing: 3px;
+  letter-spacing: 5px;
   text-transform: uppercase;
-  color: #9e8c7c;
-  margin-bottom: 25px;
+  color: rgb(234, 228, 204);
+  font-weight: 300;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
 }
 
-.tarjeta-foto {
-  width: 100%;
-  max-width: 350px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-  border: 6px solid #ffffff;
-  background-color: #ffffff;
-}
-
-
-
-/* --- SECCIÓN PRINCIPAL PANTALLA COMPLETA --- */
-.seccion-principal {
-  width: 100vw;
-  height: 100dvh; /* Ocupa exactamente el 100% de la pantalla del móvil */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Distribuye arriba, centro y abajo */
-  align-items: center;
-  padding: 40px 20px;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
-}
-
-.seccion-principal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ENCABEZADO (ARRIBA) */
-.encabezado-novios {
-  margin-top: 10px;
-}
-
-.titulo-novios {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3.2rem;
-  color: #5a4a3e;
-  line-height: 1.1;
-  margin-bottom: 4px;
-}
-
-.subtitulo-boda {
-  font-size: 0.8rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #9e8c7c;
-}
-
-/* FOTO (CENTRO) */
-.tarjeta-foto {
-  width: 100%;
-  max-width: 320px;
-  height: 52vh; /* Ajusta la altura de la foto para no desbordar */
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-  border: 6px solid #ffffff;
-  background-color: #ffffff;
-}
-
-.imagen-principal {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Garantiza que la imagen llene el contenedor con buena proporción */
-  display: block;
-}
-
-/* FECHA (ABAJO) */
+/* TEXTO INFERIOR (FECHA) */
 .pie-fecha {
-  margin-bottom: 10px;
+  position: relative;
+  z-index: 3;
+  margin-bottom: 20px;
 }
 
 .fecha-boda {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 300;
-  letter-spacing: 5px;
-  color: #6b5b4e;
+  letter-spacing: 6px;
+  color: rgb(234, 228, 204);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* PALETA DE COLORES BODA
@@ -262,12 +234,12 @@ html, body {
 
 .NuestraBoda {
   width: 100vw;
-  min-height: 100dvh;
+  min-height: 78dvh;
   background-image: url('Imagenes/paneles.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: rgb(234, 228, 204); /* Fondo base crema */
+  background-color: rgb(234, 228, 204);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -278,9 +250,11 @@ html, body {
 
 /* Cita y texto superior */
 .texto.partearriba {
-  max-width: 340px;
+max-width: 340px;
   text-align: center;
   line-height: 1.6;
+  backdrop-filter: blur(10px);
+  border-radius: 35px;
 }
 
 .texto.partearriba span {
@@ -304,23 +278,19 @@ html, body {
 
 /* Imagen central */
 .imagen-central {
-  width: 100%;
-  height: auto;
+width: 100%;
   border-radius: 12px;
   border: 4px solid rgb(234, 228, 204);
   box-shadow: 0 8px 20px rgba(55, 57, 36, 0.2);
   display: block;
-  object-fit: cover;
+  object-fit: initial;
 }
 
 /* Iniciales S & E superpuestas a la derecha */
 .textoHorizontal.derecho {
-  position: absolute;
-  right: -15px;
-  bottom: -15px;
-  font-family: 'Great Vibes', cursive;
+font-family: 'Great Vibes', cursive;
   font-size: 2.8rem;
-  color: rgb(109, 83, 42); /* Dorado/bronce cálido */
+  color: rgb(109, 83, 42);
   background-color: rgb(234, 228, 204);
   padding: 5px 15px;
   border-radius: 30px;
@@ -396,12 +366,12 @@ html, body {
 /* Imagen en el lado derecho de la sección */
 .imagen-brillante.back65opacityrotate-90 {
   position: absolute;
-  right: -20px; /* Ajusta la posición para que sobresalga o se alinee al borde */
+  
   top: 50%;
-  transform: translateY(-50%) rotate(-90deg); /* Centra verticalmente y aplica rotación */
-  width: 120px; /* Ajusta el tamaño deseado */
+  transform: translateY(-50%) rotate(-90deg);
   height: auto;
   opacity: 0.65;
   pointer-events: none;
   z-index: 1;
+  left: -315px;
 }
