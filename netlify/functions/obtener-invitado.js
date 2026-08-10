@@ -37,7 +37,7 @@ export const handler = async (event) => {
             id,
             "familiaidentificador" AS "familiaNombre",
             "familiades" AS "FamiliaDesc",
-            "Pases",
+            "pases",
             acepto,
             rechazo
         FROM "sarahienrique"
@@ -71,7 +71,7 @@ export const handler = async (event) => {
           id: invitado.id,
           familiaNombre: invitado.familiaNombre,
           FamiliaDesc: invitado.FamiliaDesc,
-          Pases: invitado.Pases,
+          Pases: invitado.pases,
           acepto: invitado.acepto,
           rechazo: invitado.rechazo,
         },
