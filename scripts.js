@@ -75,4 +75,184 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ejecutar cada segundo
   setInterval(actualizarCuentaRegresiva, 1000);
   actualizarCuentaRegresiva();
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  // Envía la pantalla al inicio al cargar el DOM
+  window.addEventListener("beforeunload", function () {
+    window.scrollTo(0, 0);
+  });
+
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
 });
+// Selección de elementos
+const modalOverlay = document.getElementById("modalOverlay");
+const btnAbrirModal = document.getElementById("btnAbrirModal");
+const btnCerrarModal = document.getElementById("btnCerrarModal");
+const btnSiAsistire = document.getElementById("btnSiAsistire");
+const btnNoAsistire = document.getElementById("btnNoAsistire");
+
+// Abrir Modal
+btnAbrirModal.addEventListener("click", () => {
+  modalOverlay.classList.add("activo");
+});
+
+// Cerrar Modal al hacer clic en "Cerrar"
+btnCerrarModal.addEventListener("click", () => {
+  modalOverlay.classList.remove("activo");
+});
+
+// Cerrar Modal al hacer clic fuera del contenido
+modalOverlay.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.remove("activo");
+  }
+});
+
+// Lógica de respuesta
+btnSiAsistire.addEventListener("click", () => {
+  alert("¡Muchas gracias por confirmar tu asistencia!");
+  modalOverlay.classList.remove("activo");
+  // Aquí puedes enviar la respuesta a WhatsApp o a tu base de datos
+});
+
+btnNoAsistire.addEventListener("click", () => {
+  alert("Lamentamos que no puedas acompañarnos. ¡Gracias por avisarnos!");
+  modalOverlay.classList.remove("activo");
+  // Aquí puedes registrar la inasistencia
+});
+
+///obtener invitado
+const params = new URLSearchParams(window.location.search);
+const familia = params.get("familia");
+
+const contenedor = document.getElementById("contenedorConfirmacion");
+
+let datosInvitado = null;
+
+if (!familia) {
+  contenedor.innerHTML = `
+    <section class="confirmacionInvitacion">
+      <div class="tarjeta-confirmacion">
+        <h2 class="titulo-esperamos">Invitación no válida</h2>
+        <p class="subtitulo-confirmacion">El enlace de invitación es incorrecto o está incompleto.</p>
+      </div>
+    </section>
+  `;
+} else {
+  fetch(
+    `/.netlify/functions/obtener-invitado?familia=${encodeURIComponent(familia)}`,
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok || !res.invitado) {
+        contenedor.innerHTML = `
+          <section class="confirmacionInvitacion">
+            <div class="tarjeta-confirmacion">
+              <h2 class="titulo-esperamos">Invitación no encontrada</h2>
+              <p class="subtitulo-confirmacion">${res.message || "No pudimos encontrar tus datos."}</p>
+            </div>
+          </section>
+        `;
+        return;
+      }
+
+      datosInvitado = res.invitado;
+      renderizarSeccionConfirmacion(datosInvitado);
+    })
+    .catch((error) => {
+      console.error("Error al obtener la invitación:", error);
+      contenedor.innerHTML = `
+        <section class="confirmacionInvitacion">
+          <div class="tarjeta-confirmacion">
+            <h2 class="titulo-esperamos">Error de conexión</h2>
+            <p class="subtitulo-confirmacion">Ocurrió un problema al cargar tu invitación. Intenta nuevamente más tarde.</p>
+          </div>
+        </section>
+      `;
+    });
+}
+
+function renderizarSeccionConfirmacion(invitado) {
+  // 1. Inyectamos la estructura HTML en el contenedor
+  contenedor.innerHTML = `
+    <!-- Sección Principal de Confirmación -->
+    <section class="confirmacionInvitacion">
+      <div class="tarjeta-confirmacion">
+        <h2 class="titulo-esperamos">Te esperamos</h2>
+        <p class="subtitulo-confirmacion">Esperamos tu confirmación</p>
+        
+        <div class="datos-invitado">
+          <span id="nombreFamilia" class="nombre-familia">${invitado.FamiliaDesc || invitado.familiaNombre}</span>
+          <span id="CantidadPases" class="cantidad-pases">Pases asignados: ${invitado.Pases}</span>
+        </div>
+
+        <button id="btnAbrirModal" class="boton-confirmar">
+          ${invitado.acepto ? "Asistencia Confirmada" : invitado.rechazo ? "Inasistencia Registrada" : "Confirmar Asistencia"}
+        </button>
+      </div>
+    </section>
+
+    <!-- Modal de Confirmación -->
+    <div id="modalOverlay" class="modal-overlay">
+      <div class="modal-contenido">
+        <h3 class="modal-titulo">Confirma tu asistencia</h3>
+        <p class="modal-instruccion">Por favor, indícanos si podrás acompañarnos en este día tan especial.</p>
+        
+        <div class="modal-acciones">
+          <button id="btnSiAsistire" class="btn-opcion btn-si">Sí Asistiré</button>
+          <button id="btnNoAsistire" class="btn-opcion btn-no">No Asistiré</button>
+        </div>
+        
+        <button id="btnCerrarModal" class="btn-cerrar">&times; Cerrar</button>
+      </div>
+    </div>
+  `;
+
+  // 2. Asignamos los eventos del Modal
+  inicializarEventosModal();
+}
+
+function inicializarEventosModal() {
+  const modalOverlay = document.getElementById("modalOverlay");
+  const btnAbrirModal = document.getElementById("btnAbrirModal");
+  const btnCerrarModal = document.getElementById("btnCerrarModal");
+  const btnSiAsistire = document.getElementById("btnSiAsistire");
+  const btnNoAsistire = document.getElementById("btnNoAsistire");
+
+  // Abrir Modal
+  btnAbrirModal.addEventListener("click", () => {
+    modalOverlay.classList.add("activo");
+  });
+
+  // Cerrar Modal
+  btnCerrarModal.addEventListener("click", () => {
+    modalOverlay.classList.remove("activo");
+  });
+
+  // Cerrar al hacer clic fuera del recuadro
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) {
+      modalOverlay.classList.remove("activo");
+    }
+  });
+
+  // Acción: Sí Asistiré
+  btnSiAsistire.addEventListener("click", () => {
+    modalOverlay.classList.remove("activo");
+    document.getElementById("btnAbrirModal").innerText =
+      "Asistencia Confirmada";
+    // Aquí puedes invocar la Netlify Function para guardar 'acepto = true'
+  });
+
+  // Acción: No Asistiré
+  btnNoAsistire.addEventListener("click", () => {
+    modalOverlay.classList.remove("activo");
+    document.getElementById("btnAbrirModal").innerText =
+      "Inasistencia Registrada";
+    // Aquí puedes invocar la Netlify Function para guardar 'rechazo = true'
+  });
+}

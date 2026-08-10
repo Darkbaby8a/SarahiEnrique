@@ -939,3 +939,193 @@ font-family: 'Great Vibes', cursive;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+/* --- SECCIÓN DE CONFIRMACIÓN Y MODAL --- 
+   Fondo sección:      Verde olivo suave / Crema
+   Verde oliva texto:  rgb(55, 57, 36)
+   Verde hoja (#7E8C54): rgb(126, 140, 84)
+   Dorado:             rgb(180, 142, 85)
+*/
+
+.confirmacionInvitacion {
+  width: 100vw;
+  min-height: 80dvh;
+  background-color: rgb(234, 228, 204);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+.tarjeta-confirmacion {
+  width: 100%;
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 35px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(180, 142, 85, 0.3);
+  box-shadow: 0 8px 24px rgba(55, 57, 36, 0.1);
+  box-sizing: border-box;
+}
+
+.titulo-esperamos {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.2rem;
+  font-weight: normal;
+  color: rgb(55, 57, 36);
+  margin: 0 0 8px 0;
+}
+
+.subtitulo-confirmacion {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #555;
+  margin: 0 0 20px 0;
+}
+
+.datos-invitado {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 25px;
+}
+
+.nombre-familia {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: rgb(55, 57, 36);
+}
+
+.cantidad-pases {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #7E8C54;
+  letter-spacing: 0.5px;
+}
+
+/* Botón Principal */
+.boton-confirmar {
+  padding: 12px 28px;
+  background-color: rgb(55, 57, 36);
+  color: rgb(234, 228, 204);
+  border: none;
+  border-radius: 25px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(55, 57, 36, 0.2);
+}
+
+.boton-confirmar:active {
+  transform: scale(0.97);
+  background-color: #7E8C54;
+}
+
+/* --- ESTILOS DEL MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(55, 57, 36, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-overlay.activo {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-contenido {
+  width: 100%;
+  max-width: 360px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(180, 142, 85, 0.3);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.activo .modal-contenido {
+  transform: translateY(0);
+}
+
+.modal-titulo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: rgb(55, 57, 36);
+  margin: 0 0 10px 0;
+  font-weight: normal;
+}
+
+.modal-instruccion {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.modal-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn-opcion {
+  padding: 12px;
+  border-radius: 20px;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-si {
+  background-color: #7E8C54;
+  color: #ffffff;
+}
+
+.btn-no {
+  background-color: transparent;
+  border: 1px solid rgba(55, 57, 36, 0.3);
+  color: rgb(55, 57, 36);
+}
+
+.btn-cerrar {
+  background: none;
+  border: none;
+  color: #888;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
