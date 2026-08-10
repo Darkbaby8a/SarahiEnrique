@@ -54,7 +54,7 @@ export const handler = async (event) => {
       SET
         "familiades" = $1,
         "familiaidentificador" = $2,
-        "Pases" = $3
+        "pases" = $3
       WHERE id = $4
       RETURNING id;
     `;
