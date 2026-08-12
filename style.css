@@ -429,18 +429,19 @@ font-family: 'Great Vibes', cursive;
   display: block;
   width: 100%;
   max-width: 380px;
-  height: 65vh; /* Ocupa el 65% del alto de la pantalla */
+  height: auto; /* Ajustado para que crezca verticalmente según las fotos */
   margin: 0 auto;
 }
 
-/* Columnas individuales con foto de fondo */
+/* Columnas individuales alineadas en bloque vertical */
 .columna-foto {
   display: block;
-  float: left;
+  float: none; /* Desactiva la alineación horizontal previo */
   position: relative;
-  width: calc(33.333% - 7px); /* Divide el espacio en 3 columnas ajustando por el margen */
-  margin-right: 10px;
-  height: 100%;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  height: 250px; /* Altura fija para cada tarjeta de foto en vertical */
+  margin-right: 0;
+  margin-bottom: 20px; /* Espaciado hacia abajo entre fotos */
   border-radius: 20px;
   background-size: cover;
   background-position: center;
@@ -452,12 +453,12 @@ font-family: 'Great Vibes', cursive;
 }
 
 .columna-foto:last-child {
-  margin-right: 0;
+  margin-bottom: 0;
 }
 
-/* Desplazamiento leve de la foto central */
+/* Desactivado el desplazamiento vertical en la foto del medio para mantener orden uniforme */
 .fotoalargadamedio {
-  transform: translateY(-12px);
+  transform: none;
 }
 
 /* Sombra gradual en el fondo de las fotos */
@@ -635,11 +636,11 @@ font-family: 'Great Vibes', cursive;
 
 /* Proporciones de altura */
 .height20 {
-  height: 25%;
+  height: 40%;
 }
 
 .height80 {
-  height: 75%;
+  height: 60%;
 }
 
 .height100 {
@@ -843,7 +844,7 @@ font-family: 'Great Vibes', cursive;
 .caja-tiempo {
   flex: 1;
   background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px); /* Efecto cristal translúcido */
+/*  backdrop-filter: blur(4px); /* Efecto cristal translúcido */
   border: 1px solid rgba(126, 140, 84, 0.4); /* Borde con verde olivo #7E8C54 */
   border-radius: 14px;
   padding: 16px 4px;
