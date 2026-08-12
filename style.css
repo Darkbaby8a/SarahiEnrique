@@ -250,7 +250,7 @@ html, body {
 
 /* Cita y texto superior */
 .texto.partearriba {
-max-width: 340px;
+max-width: 245px;
   text-align: center;
   line-height: 1.6;
   backdrop-filter: blur(10px);
@@ -316,12 +316,14 @@ font-family: 'Great Vibes', cursive;
 
 /* Contenido centralizado */
 .contenido-bendicion {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  z-index: 2; /* Mantiene el texto por encima de la imagen */
-  max-width: 80%;
+ display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    text-align: center;
+    left: 23px;
+    z-index: 2;
+    max-width: 60%;
+    position: absolute;
 }
 
 .nombres-padres {
