@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const seccionPrincipal = document.getElementById("seccionPrincipal");
   const textoElemento = document.getElementById("textoEscrito");
   const textoEscritoFecha = document.getElementById("textoEscritoFecha");
+
   const textoAEscribir = "Sarahí & Enrique";
   const textoAEscribirFecha = "27 de Septiembre de 2026";
   let abierto = false;
@@ -15,21 +16,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Abrir la solapa y desplazar la tarjeta interior
     sobre.classList.add("abierto");
 
-    // 2. Iniciar el efecto de mecanografiado
+    // 2. Iniciar el efecto de mecanografiado de forma secuencial
     setTimeout(() => {
+      // Activa el cursor parpadeante en el primer texto
+      textoElemento.classList.add("escribiendo");
+
+      // Escribir Nombres
       escribirTexto(textoElemento, textoAEscribir, 90, () => {
-        // 3. Ocultar el sobre y mostrar la sección principal con la foto
-        setTimeout(() => {
-          contenedorSobre.classList.add("oculto");
-          seccionPrincipal.classList.add("visible");
-        }, 1000);
-      });
-            escribirTexto(textoEscritoFecha, textoAEscribirFecha, 90, () => {
-        // 3. Ocultar el sobre y mostrar la sección principal con la foto
-        setTimeout(() => {
-          contenedorSobre.classList.add("oculto");
-          seccionPrincipal.classList.add("visible");
-        }, 1000);
+        textoElemento.classList.remove("escribiendo"); // Remueve cursor de nombres
+        textoEscritoFecha.classList.add("escribiendo"); // Activa cursor en fecha
+
+        // Escribir Fecha
+        escribirTexto(textoEscritoFecha, textoAEscribirFecha, 90, () => {
+          // 3. Ocultar el sobre y mostrar la sección principal
+          setTimeout(() => {
+            contenedorSobre.classList.add("oculto");
+            seccionPrincipal.classList.add("visible");
+          }, 1000);
+        });
       });
     }, 800);
   });
@@ -272,43 +276,43 @@ function mostrarMensaje(asistira) {
 }
 // 1. Deshabilitar el clic derecho
 //document.addEventListener("contextmenu", (e) => {
-  //e.preventDefault();
+//e.preventDefault();
 //});
 
 // 2. Deshabilitar atajos de teclado para inspeccionar
 //document.addEventListener("keydown", (e) => {
-  // Deshabilitar F12
-  //if (e.key === "F12") {
-   // e.preventDefault();
-  //}
+// Deshabilitar F12
+//if (e.key === "F12") {
+// e.preventDefault();
+//}
 
-  // Deshabilitar Ctrl+Shift+I (Inspeccionar), Ctrl+Shift+J (Consola), Ctrl+Shift+C (Elemento)
-  //if (
-    //e.ctrlKey &&
-    //e.shiftKey &&
-    //["I", "J", "C", "i", "j", "c"].includes(e.key)
-  //) {
-   // e.preventDefault();
-  //}
+// Deshabilitar Ctrl+Shift+I (Inspeccionar), Ctrl+Shift+J (Consola), Ctrl+Shift+C (Elemento)
+//if (
+//e.ctrlKey &&
+//e.shiftKey &&
+//["I", "J", "C", "i", "j", "c"].includes(e.key)
+//) {
+// e.preventDefault();
+//}
 
-  // Deshabilitar Cmd+Option+I / Cmd+Option+J en macOS
-  //if (e.metaKey && e.altKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) {
-   // e.preventDefault();
-  //}
+// Deshabilitar Cmd+Option+I / Cmd+Option+J en macOS
+//if (e.metaKey && e.altKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) {
+// e.preventDefault();
+//}
 
-  // Deshabilitar Ctrl+U / Cmd+U (Ver código fuente)
-  //if ((e.ctrlKey || e.metaKey) && ["U", "u"].includes(e.key)) {
-   // e.preventDefault();
- // }
+// Deshabilitar Ctrl+U / Cmd+U (Ver código fuente)
+//if ((e.ctrlKey || e.metaKey) && ["U", "u"].includes(e.key)) {
+// e.preventDefault();
+// }
 //});
 
 // 3. Trampa de debugger (opcional: pausa la ejecución si logran abrir la consola)
 //setInterval(() => {
-  //const startTime = performance.now();
-  //debugger;
-  //const endTime = performance.now();
-  // Si la consola está abierta, la instrucción 'debugger' pausa el flujo y causa un retraso medible
-  //if (endTime - startTime > 100) {
-   // console.clear();
-  //}
+//const startTime = performance.now();
+//debugger;
+//const endTime = performance.now();
+// Si la consola está abierta, la instrucción 'debugger' pausa el flujo y causa un retraso medible
+//if (endTime - startTime > 100) {
+// console.clear();
+//}
 //}, 1000);

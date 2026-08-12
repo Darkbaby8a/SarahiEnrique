@@ -84,10 +84,12 @@ html, body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
   z-index: 1;
   display: flex;
+  flex-direction: column; /* Apila el texto verticalmente */
   justify-content: center;
   align-items: center;
+  gap: 12px; /* Espacio proporcional entre los nombres y la fecha */
   transition: transform 0.8s ease-in-out 0.4s, z-index 0s 0.8s;
-  padding: 10px;
+  padding: 15px;
   border: 1px solid #eae0d5;
 }
 
@@ -96,10 +98,17 @@ html, body {
   font-family: 'Great Vibes', cursive;
   font-size: 1.8rem;
   color: #6b5b4e;
-  border-right: 2px solid #6b5b4e;
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
+  border-right: 2px solid transparent; /* Oculto hasta que se esté escribiendo */
+  min-height: 2rem; /* Mantiene la altura visual mientras está vacío */
+}
+.escritura-letraporletra.fecha {
+  font-size: 1.2rem; /* Tamaño ligeramente menor para la fecha */
+}
+.escritura-letraporletra.escribiendo {
+  border-right: 2px solid #6b5b4e;
   animation: parpadeoCursor 0.75s step-end infinite;
 }
 
