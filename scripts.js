@@ -295,47 +295,47 @@ function mostrarMensaje(asistira) {
   }
 }
 // 1. Deshabilitar el clic derecho
-//document.addEventListener("contextmenu", (e) => {
-//e.preventDefault();
-//});
+document.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+});
 
 // 2. Deshabilitar atajos de teclado para inspeccionar
-//document.addEventListener("keydown", (e) => {
-// Deshabilitar F12
-//if (e.key === "F12") {
-// e.preventDefault();
-//}
+document.addEventListener("keydown", (e) => {
+  //Deshabilitar F12
+  if (e.key === "F12") {
+    e.preventDefault();
+  }
 
-// Deshabilitar Ctrl+Shift+I (Inspeccionar), Ctrl+Shift+J (Consola), Ctrl+Shift+C (Elemento)
-//if (
-//e.ctrlKey &&
-//e.shiftKey &&
-//["I", "J", "C", "i", "j", "c"].includes(e.key)
-//) {
-// e.preventDefault();
-//}
+  // Deshabilitar Ctrl+Shift+I (Inspeccionar), Ctrl+Shift+J (Consola), Ctrl+Shift+C (Elemento)
+  if (
+    e.ctrlKey &&
+    e.shiftKey &&
+    ["I", "J", "C", "i", "j", "c"].includes(e.key)
+  ) {
+    e.preventDefault();
+  }
 
-// Deshabilitar Cmd+Option+I / Cmd+Option+J en macOS
-//if (e.metaKey && e.altKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) {
-// e.preventDefault();
-//}
+  // Deshabilitar Cmd+Option+I / Cmd+Option+J en macOS
+  if (e.metaKey && e.altKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) {
+    e.preventDefault();
+  }
 
-// Deshabilitar Ctrl+U / Cmd+U (Ver código fuente)
-//if ((e.ctrlKey || e.metaKey) && ["U", "u"].includes(e.key)) {
-// e.preventDefault();
-// }
-//});
+  // Deshabilitar Ctrl+U / Cmd+U (Ver código fuente)
+  if ((e.ctrlKey || e.metaKey) && ["U", "u"].includes(e.key)) {
+    e.preventDefault();
+  }
+});
 
 // 3. Trampa de debugger (opcional: pausa la ejecución si logran abrir la consola)
-//setInterval(() => {
-//const startTime = performance.now();
-//debugger;
-//const endTime = performance.now();
-// Si la consola está abierta, la instrucción 'debugger' pausa el flujo y causa un retraso medible
-//if (endTime - startTime > 100) {
-// console.clear();
-//}
-//}, 1000);
+setInterval(() => {
+  const startTime = performance.now();
+  debugger;
+  const endTime = performance.now();
+  //Si la consola está abierta, la instrucción 'debugger' pausa el flujo y causa un retraso medible
+  if (endTime - startTime > 100) {
+    console.clear();
+  }
+}, 1000);
 
 let petalInterval = null;
 
