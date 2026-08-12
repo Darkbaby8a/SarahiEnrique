@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Control de Acceso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    :root {
+      --color-primario: #6b5b4e;
+      --color-primario-claro: #837162;
+      --color-borde: #eae0d5;
+      --fondo-pantalla: #faf8f5;
+      --blanco: #ffffff;
+      --verde-exito: #2e7d32;
+      --rojo-error: #b02a37;
+      --amarillo-pendiente: #d97706;
+    }
+
+    /* ===== BASE ===== */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--fondo-pantalla);
+      color: var(--color-primario);
+    }
+
+    .access-body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .access-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--blanco);
+      border-radius: 26px;
+      padding: 30px 26px;
+      box-shadow: 0 15px 35px rgba(107, 91, 78, 0.12);
+      border: 1px solid var(--color-borde);
+    }
+
+    /* ===== HEADER ===== */
+    .access-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--color-primario);
+      letter-spacing: 2px;
+      margin: 0;
+      font-family: 'Great Vibes', cursive, system-ui;
+    }
+
+    .separator-gold {
+      text-align: center;
+      color: var(--color-primario-claro);
+      margin: 12px 0 24px;
+    }
+
+    /* ===== TABS ===== */
+    .access-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 14px;
+      border-radius: 40px;
+      border: 1px solid var(--color-borde);
+      background: var(--blanco);
+      color: var(--color-primario);
+      font-size: .9rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, var(--color-primario), var(--color-primario-claro));
+      color: var(--blanco);
+      border: none;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-label {
+      font-size: .85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-primario);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    /* ===== QR ===== */
+    .qr-frame {
+      padding: 14px;
+      border-radius: 16px;
+      border: 2px solid var(--color-borde);
+      background: #fdfcfb;
+    }
+
+    /* ===== INPUTS & SELECTS ===== */
+    input,
+    select {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--color-borde);
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      box-sizing: border-box;
+      outline-color: var(--color-primario);
+      color: var(--color-primario);
+      background: var(--blanco);
+    }
+
+    /* ===== BUTTON ===== */
+    .btn-primary {
+      width: 100%;
+      padding: 18px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--color-primario), var(--color-primario-claro));
+      color: var(--blanco);
+      border: none;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ===== INFO ===== */
+    .info-box h3 {
+      color: var(--color-primario);
+      margin-bottom: 14px;
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    .passes-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+
+    .disponibles-ok {
+      color: var(--verde-exito);
+      font-weight: bold;
+    }
+
+    .disponibles-cero {
+      color: var(--rojo-error);
+      font-weight: bold;
+    }
+
+    /* ===== MENSAJE DE ÉXITO ===== */
+    .status {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(46, 125, 50, 0.12);
+      color: var(--verde-exito);
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.05rem;
+    }
+
+    /* ===== RESULTADOS ===== */
+    .result-item {
+      border: 1px solid var(--color-borde);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .result-item:hover {
+      background: rgba(234, 224, 213, 0.3);
+    }
+
+    .estado-mensaje {
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .estado-ok {
+      color: var(--verde-exito);
+    }
+
+    .estado-denegado {
+      color: var(--rojo-error);
+    }
+
+    .estado-pendiente {
+      color: var(--amarillo-pendiente);
+    }
+
+    /* ===== LISTA ===== */
+    .access-table {
+      width: 100%;
+      font-size: .95rem;
+      border-collapse: collapse;
+    }
+
+    .access-table th {
+      color: var(--color-primario);
+      border-bottom: 2px solid var(--color-borde);
+      padding-bottom: 8px;
+      text-align: left;
+    }
+
+    .access-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-borde);
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 480px) {
+      .passes-info {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body class="access-body">
+  <div class="access-card">
+
+    <h1 class="access-title">Control de Acceso</h1>
+    <div class="separator-gold">✦</div>
+
+    <div class="access-tabs">
+      <button class="tab active" onclick="mostrar('qr',this)">QR</button>
+      <button class="tab" onclick="mostrar('manual',this)">Manual</button>
+      <button class="tab" onclick="mostrar('lista',this)">Lista</button>
+    </div>
+
+    <!-- QR -->
+    <div id="qr" class="section active">
+      <p class="section-label">Escanear invitación</p>
+      <div class="qr-frame">
+        <div id="reader"></div>
+      </div>
+    </div>
+
+    <!-- MANUAL -->
+    <div id="manual" class="section">
+      <p class="section-label">Buscar invitado</p>
+      <input id="familiaManual" placeholder="Nombre o familia">
+      <button class="btn-primary" onclick="buscar()">Buscar</button>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div id="resultados" class="section">
+      <p class="section-label">Selecciona invitado</p>
+      <div id="listaResultados"></div>
+    </div>
+
+    <!-- INFO -->
+    <div id="infoBox" class="section info-box">
+      <h3 id="nombre"></h3>
+
+      <div class="passes-info">
+        <span>Pases: <strong id="pases"></strong></span>
+        <span>Usados: <strong id="usados"></strong></span>
+        <span>Disponibles: <strong id="disponibles"></strong></span>
+      </div>
+
+      <input type="number" id="pasesUsar" placeholder="Pases a utilizar">
+      <button class="btn-primary" onclick="registrar()">Registrar entrada</button>
+      <div id="estadoAcceso" class="estado-mensaje"></div>
+
+      <div id="mensaje" class="status">✔ Acceso registrado correctamente</div>
+    </div>
+
+    <!-- LISTA -->
+    <div id="lista" class="section">
+
+      <p class="section-label">Filtros</p>
+      <div id="totalesBox"
+        style="margin-bottom:20px; padding:14px; border-radius:14px; background: rgba(234,224,213,0.3); font-size:.95rem; border: 1px solid var(--color-borde);">
+        <strong>Resumen:</strong><br>
+        Total invitados: <span id="totalInvitados">0</span><br>
+        Aceptaron: <span id="totalAceptaron" style="color:var(--verde-exito);font-weight:bold;">0</span><br>
+        Rechazaron: <span id="totalRechazaron" style="color:var(--rojo-error);font-weight:bold;">0</span><br>
+        Pendientes: <span id="totalPendientes" style="color:var(--amarillo-pendiente);font-weight:bold;">0</span><br>
+        Total pases Aceptados: <span id="totalDisponibles">0</span>
+      </div>
+
+      <input type="text" id="filtroNombre" placeholder="Buscar por nombre o familia">
+
+      <select id="filtroEstado">
+        <option value="todos">Todos</option>
+        <option value="aceptado">Aceptaron</option>
+        <option value="rechazado">Rechazaron</option>
+        <option value="pendiente">Pendientes</option>
+      </select>
+
+      <select id="filtroDisponibles">
+        <option value="todos">Todos</option>
+        <option value="con">Con pases disponibles</option>
+        <option value="sin">Sin pases disponibles</option>
+      </select>
+
+      <br><br>
+
+      <table class="access-table">
+        <thead>
+          <tr>
+            <th>Familia</th>
+            <th>Nombre</th>
+            <th>Pases</th>
+            <th>Usados</th>
+            <th>Disponibles</th>
+            <th>Aceptó</th>
+            <th>Rechazó</th>
+            <th>Pendiente</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+    let invitadoActual = null;
+    let qrScanner = null;
+
+    /* NAVEGACIÓN */
+    function mostrar(id, btn) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+
+      document.getElementById(id).classList.add("active");
+      if (btn) btn.classList.add("active");
+
+      if (id === "qr") iniciarQR();
+      if (id === "lista") cargarLista();
+    }
+
+    /* QR */
+    function iniciarQR() {
+      if (qrScanner) return;
+
+      qrScanner = new Html5Qrcode("reader");
+
+      qrScanner.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        (txt) => {
+          try {
+            const data = JSON.parse(txt);
+
+
+
+            buscarPorFamilia(data);
+
+            qrScanner.stop();
+            qrScanner = null;
+
+          } catch (err) {
+            alert("QR inválido");
+          }
+        }
+      );
+    }
+
+    function buscarPorFamilia(familia) {
+      fetch(`/.netlify/functions/obtener-invitado-qr?familia=${encodeURIComponent(familia)}`)
+        .then(r => r.json())
+        .then(r => {
+          if (!r.ok || r.invitados.length === 0) {
+            alert("Familia no encontrada");
+            return;
+          }
+
+          if (r.invitados.length === 1) {
+            seleccionar(r.invitados[0]);
+            return;
+          }
+
+          mostrar("resultados");
+
+          const cont = document.getElementById("listaResultados");
+          cont.innerHTML = "";
+
+          r.invitados.forEach(i => {
+            cont.innerHTML += `
+              <div class="result-item" onclick='seleccionar(${JSON.stringify(i)})'>
+                <strong>${i.familiades}</strong><br>
+                Familia: ${i.familiaidentificador}
+              </div>
+            `;
+          });
+        });
+    }
+
+    /* BUSCAR */
+    function buscar() {
+      const v = document.getElementById("familiaManual").value.trim();
+      if (v) buscarInvitado(v);
+    }
+
+    function buscarInvitado(nombre) {
+      fetch(`/.netlify/functions/obtener-invitado-nombre?displayname=${encodeURIComponent(nombre)}`)
+        .then(r => r.json())
+        .then(r => {
+          if (!r.ok || r.invitados.length === 0) {
+            alert("No encontrado");
+            return;
+          }
+
+          if (r.invitados.length === 1) {
+            seleccionar(r.invitados[0]);
+            return;
+          }
+
+          mostrar("resultados");
+          const cont = document.getElementById("listaResultados");
+          cont.innerHTML = "";
+
+          r.invitados.forEach(i => {
+            cont.innerHTML += `
+              <div class="result-item" onclick='seleccionar(${JSON.stringify(i)})'>
+                <strong>${i.displayname}</strong><br>
+                Familia: ${i.familia}
+              </div>
+            `;
+          });
+        });
+    }
+
+    /* SELECCIONAR */
+    function seleccionar(i) {
+      invitadoActual = i;
+      mostrar("infoBox");
+
+      const usados = i.pasesuti || 0;
+      const disponibles = (i.pases || 0) - usados;
+
+      document.getElementById("nombre").textContent = i.displayname;
+      document.getElementById("pases").textContent = i.pases;
+      document.getElementById("usados").textContent = usados;
+
+      const dispEl = document.getElementById("disponibles");
+      dispEl.textContent = disponibles;
+
+      if (disponibles > 0) {
+        dispEl.className = "disponibles-ok";
+      } else {
+        dispEl.className = "disponibles-cero";
+      }
+
+      const btn = document.querySelector("#infoBox .btn-primary");
+      const estado = document.getElementById("estadoAcceso");
+
+      if (i.rechazo === true) {
+        btn.disabled = true;
+        btn.textContent = "Acceso Denegado";
+        btn.style.opacity = "0.5";
+
+        estado.textContent = "🔴 Invitación rechazada";
+        estado.className = "estado-mensaje estado-denegado";
+      }
+      else if (i.acepto !== true) {
+        btn.disabled = true;
+        btn.textContent = "Pendiente";
+        btn.style.opacity = "0.5";
+
+        estado.textContent = "🟡 Invitación pendiente de confirmación";
+        estado.className = "estado-mensaje estado-pendiente";
+      }
+      else if (disponibles <= 0) {
+        btn.disabled = true;
+        btn.textContent = "Sin pases disponibles";
+        btn.style.opacity = "0.5";
+
+        estado.textContent = "🔴 Todos los pases ya fueron utilizados";
+        estado.className = "estado-mensaje estado-denegado";
+      }
+      else {
+        btn.disabled = false;
+        btn.textContent = "Registrar Entrada";
+        btn.style.opacity = "1";
+
+        estado.textContent = "🟢 Acceso permitido";
+        estado.className = "estado-mensaje estado-ok";
+      }
+
+      document.getElementById("mensaje").style.display = "none";
+    }
+
+    /* REGISTRAR ENTRADA */
+    function registrar() {
+      if (!invitadoActual) return;
+
+      const usados = invitadoActual.pasesuti || 0;
+      const disponibles = (invitadoActual.pases || 0) - usados;
+
+      if (!(invitadoActual.acepto === true && invitadoActual.rechazo === false)) {
+        alert("Este invitado no aceptó la invitación.");
+        return;
+      }
+
+      if (disponibles <= 0) {
+        alert("No hay pases disponibles.");
+        return;
+      }
+
+      const usar = parseInt(document.getElementById("pasesUsar").value);
+
+      if (!usar || usar <= 0) {
+        alert("Cantidad inválida");
+        return;
+      }
+
+      if (usar > disponibles) {
+        alert("Excede los pases disponibles");
+        return;
+      }
+
+      fetch("/.netlify/functions/registrar-acceso", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          familia: invitadoActual.familia,
+          pasesUsar: usar
+        })
+      })
+        .then(r => r.json())
+        .then(r => {
+          if (r.ok) {
+            document.getElementById("mensaje").style.display = "block";
+            document.getElementById("pasesUsar").value = "";
+
+            invitadoActual.pasesuti = usados + usar;
+
+            seleccionar(invitadoActual);
+          }
+        });
+    }
+
+    /* LISTA */
+    let listaGlobal = [];
+
+    function cargarLista() {
+      fetch("/.netlify/functions/listar-invitados")
+        .then(r => r.json())
+        .then(r => {
+          if (!r.ok) return;
+
+          listaGlobal = r.invitados;
+          renderTabla(listaGlobal);
+        });
+    }
+
+    function renderTabla(data) {
+      const tabla = document.getElementById("tabla");
+      tabla.innerHTML = "";
+
+      let totalInvitados = 0;
+      let totalAceptaron = 0;
+      let totalRechazaron = 0;
+      let totalPendientes = 0;
+      let totalPasesAceptados = 0;
+
+      data.forEach(i => {
+        totalInvitados++;
+
+        const usados = i.pasesuti || 0;
+        const disponibles = (i.pases || 0) - usados;
+
+        let acepto = "";
+        let rechazo = "";
+        let pendiente = "";
+
+        if (i.acepto === true && i.rechazo === false) {
+          acepto = "✔";
+          totalAceptaron++;
+          totalPasesAceptados += (i.pases || 0);
+        }
+        else if (i.acepto === false && i.rechazo === true) {
+          rechazo = "✖";
+          totalRechazaron++;
+        }
+        else {
+          pendiente = "⏳";
+          totalPendientes++;
+        }
+
+        tabla.innerHTML += `
+          <tr>
+            <td>${i.familiaNombre}</td>
+            <td>${i.FamiliaDesc}</td>
+            <td>${i.pases}</td>
+            <td>${usados}</td>
+            <td>${disponibles}</td>
+            <td style="text-align:center;color:var(--verde-exito);font-weight:bold;">${acepto}</td>
+            <td style="text-align:center;color:var(--rojo-error);font-weight:bold;">${rechazo}</td>
+            <td style="text-align:center;color:var(--amarillo-pendiente);font-weight:bold;">${pendiente}</td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("totalInvitados").textContent = totalInvitados;
+      document.getElementById("totalAceptaron").textContent = totalAceptaron;
+      document.getElementById("totalRechazaron").textContent = totalRechazaron;
+      document.getElementById("totalPendientes").textContent = totalPendientes;
+      document.getElementById("totalDisponibles").textContent = totalPasesAceptados;
+    }
+
+    /* FILTROS */
+    document.getElementById("filtroNombre").addEventListener("input", aplicarFiltros);
+    document.getElementById("filtroEstado").addEventListener("change", aplicarFiltros);
+
+    function aplicarFiltros() {
+      const nombreFiltro = document.getElementById("filtroNombre").value.toLowerCase();
+      const estadoFiltro = document.getElementById("filtroEstado").value;
+
+      let filtrados = listaGlobal.filter(i => {
+        const coincideNombre =
+          i.displayname.toLowerCase().includes(nombreFiltro) ||
+          i.familia.toLowerCase().includes(nombreFiltro);
+
+        let coincideEstado = true;
+
+        if (estadoFiltro === "aceptado") {
+          coincideEstado = i.acepto === true && i.rechazo === false;
+        }
+
+        if (estadoFiltro === "rechazado") {
+          coincideEstado = i.acepto === false && i.rechazo === true;
+        }
+
+        if (estadoFiltro === "pendiente") {
+          coincideEstado = i.acepto === false && i.rechazo === false;
+        }
+
+        return coincideNombre && coincideEstado;
+      });
+
+      renderTabla(filtrados);
+    }
+  </script>
+</body>
+
+</html>

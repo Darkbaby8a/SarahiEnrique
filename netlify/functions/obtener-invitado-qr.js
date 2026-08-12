@@ -7,7 +7,11 @@ const pool = new Pool({
 
 export const handler = async (event) => {
   if (event.httpMethod !== "GET") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    return {
+      statusCode: 405,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ok: false, error: "Method Not Allowed" }),
+    };
   }
 
   const { familia } = event.queryStringParameters || {};
@@ -15,6 +19,7 @@ export const handler = async (event) => {
   if (!familia) {
     return {
       statusCode: 400,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ok: false, error: "familia requerido" }),
     };
   }
@@ -24,29 +29,34 @@ export const handler = async (event) => {
       `
       SELECT
         id,
-        FamiliaNombre,
-        FamiliaDesc,
+        familiaidentificador AS familia,
+        familiades AS displayname,
+        familiaidentificador,
+        familiades,
         pases,
-        COALESCE(pasesuti,0) as pasesuti,
+        COALESCE(pasesuti, 0) AS pasesuti,
         acepto,
         rechazo
-      FROM IsmaLuisa
-      WHERE FamiliaNombre = $1
-      ORDER BY FamiliaDesc
+      FROM sarahienrique
+      WHERE familiaidentificador = $1
+      ORDER BY familiades
     `,
       [familia],
     );
 
     return {
       statusCode: 200,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ok: true,
         invitados: rows,
       }),
     };
   } catch (err) {
+    console.error("Error en obtener-invitado-qr:", err);
     return {
       statusCode: 500,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ok: false, error: err.message }),
     };
   }

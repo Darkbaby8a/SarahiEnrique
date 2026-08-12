@@ -5,25 +5,29 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-export const handler = async () => {
+export const handler = async (event) => {
+  if (event.httpMethod && event.httpMethod !== "GET") {
+    return {
+      statusCode: 405,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ok: false, message: "Method Not Allowed" }),
+    };
+  }
+
   try {
     const { rows } = await pool.query(`
       SELECT
-        familiaNombre,
-        FamiliaDesc,
+        familiaidentificador,
+        familiades,
         pases,
         COALESCE(pasesuti, 0) AS pasesuti,
         (pases - COALESCE(pasesuti, 0)) AS disponibles,
         acepto,
-        fechaaceptado,
         rechazo
-
-
-      FROM IsmaLuisa
-      ORDER BY familiaNombre, FamiliaDesc
+      FROM sarahienrique
+      ORDER BY familiaidentificador, familiades
     `);
 
-    // ===== CALCULAR TOTALES =====
     const totales = {
       total_invitados: rows.length,
       total_aceptaron: 0,
@@ -32,19 +36,40 @@ export const handler = async () => {
       total_disponibles: 0,
     };
 
-    rows.forEach((i) => {
-      if (i.estado === "acepto") totales.total_aceptaron++;
-      if (i.estado === "rechazo") totales.total_rechazaron++;
-      if (i.estado === "pendiente") totales.total_pendientes++;
+    const invitadosMapeados = rows.map((i) => {
+      const pases = Number(i.pases || 0);
+      const pasesuti = Number(i.pasesuti || 0);
+      const disponibles = Number(i.disponibles || 0);
 
-      totales.total_disponibles += Number(i.disponibles);
+      if (i.acepto === true && i.rechazo === false) {
+        totales.total_aceptaron++;
+      } else if (i.acepto === false && i.rechazo === true) {
+        totales.total_rechazaron++;
+      } else {
+        totales.total_pendientes++;
+      }
+
+      totales.total_disponibles += disponibles;
+
+      return {
+        familia: i.familiaidentificador,
+        familiaNombre: i.familiaidentificador,
+        displayname: i.familiades,
+        FamiliaDesc: i.familiades,
+        pases: pases,
+        pasesuti: pasesuti,
+        disponibles: disponibles,
+        acepto: i.acepto,
+        rechazo: i.rechazo,
+      };
     });
 
     return {
       statusCode: 200,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ok: true,
-        invitados: rows,
+        invitados: invitadosMapeados,
         totales,
       }),
     };
@@ -53,6 +78,7 @@ export const handler = async () => {
 
     return {
       statusCode: 500,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ok: false,
         error: "Error interno del servidor",

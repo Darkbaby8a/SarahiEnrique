@@ -173,6 +173,7 @@ function renderizarSeccionConfirmacion(invitado) {
       <div class="seccion-pase-qr">
         <p class="texto-pase-entrada">Este es tu pase de entrada</p>
         <img class="codigo-qr-img" src="${qrUrl}" alt="Pase de Entrada QR" />
+        <p class="subtitulo-confirmacion">Favor de mostrarlo en la entrada de la recepción</p>
       </div>
     `;
   }
