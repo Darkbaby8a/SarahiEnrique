@@ -368,20 +368,27 @@
       qrScanner.start(
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
-        (txt) => {
-          try {
-            const data = JSON.parse(txt);
+        async (txt) => {
+          // Limpiar espacios en blanco al inicio o final del texto leído
+          const familiaIdentificador = txt ? txt.trim() : "";
 
-
-
-            buscarPorFamilia(data);
-
-            qrScanner.stop();
-            qrScanner = null;
-
-          } catch (err) {
-            alert("QR inválido");
+          if (!familiaIdentificador) {
+            alert("El código QR está vacío o es inválido");
+            return;
           }
+
+          // Detener el escáner antes de procesar la búsqueda
+          try {
+            if (qrScanner) {
+              await qrScanner.stop();
+              qrScanner = null;
+            }
+          } catch (err) {
+            console.error("Error al detener el lector QR:", err);
+          }
+
+          // Pasar directamente el nombre/identificador a la función de búsqueda
+          buscarPorFamilia(familiaIdentificador);
         }
       );
     }
