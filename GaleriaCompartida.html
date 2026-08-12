@@ -17,20 +17,28 @@
 
     <style>
         /* ==========================================
-           PALETA DE COLORES (OSCURA ELEGANTE / GUINDA Y ORO)
+           PALETA DE COLORES (VERDE, CREMA Y DORADO)
            ========================================== */
         :root {
-            --fondo-principal: #0d090a;
-            --tarjeta-bg: #161013;
-            --tarjeta-suave: #22181c;
-            --guinda: #80122b;
-            --guinda-brillante: #a3193a;
-            --guinda-oscuro: #4a0817;
+            --fondo-principal: #0b1912;
+            /* Verde muy oscuro para el fondo */
+            --tarjeta-bg: #11241a;
+            /* Verde bosque profundo para tarjetas */
+            --tarjeta-suave: #193325;
+            /* Verde ligeramente más claro para elementos contenedores */
+            --verde-esmeralda: #1c4d34;
+            /* Verde esmeralda acento */
+            --verde-brillante: #2d6a4f;
+            /* Verde para hover y estados destacados */
+            --crema-principal: #f8f5ee;
+            /* Crema suave para textos principales */
+            --crema-secundario: #dcd6c8;
+            /* Crema atenuado para subtítulos y párrafos */
             --oro-acento: #d4af37;
+            /* Dorado cálido */
             --oro-suave: rgba(212, 175, 55, 0.35);
-            --texto-principal: #f4efe8;
-            --texto-secundario: #c5bcb8;
-            --sombra-elegante: 0 25px 50px rgba(0, 0, 0, 0.6), 0 10px 25px rgba(128, 18, 43, 0.15);
+            /* Dorado translúcido para bordes */
+            --sombra-elegante: 0 25px 50px rgba(0, 0, 0, 0.6), 0 10px 25px rgba(28, 77, 52, 0.2);
         }
 
         * {
@@ -42,9 +50,9 @@
         body {
             background-color: var(--fondo-principal);
             background-image:
-                radial-gradient(circle at 50% 0%, rgba(128, 18, 43, 0.25) 0%, transparent 60%),
-                radial-gradient(circle at 50% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
-            color: var(--texto-principal);
+                radial-gradient(circle at 50% 0%, rgba(28, 77, 52, 0.35) 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            color: var(--crema-principal);
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
             padding-bottom: 80px;
@@ -60,7 +68,7 @@
         .brillo {
             width: 320px;
             height: 320px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
             position: absolute;
             left: 50%;
             top: 20px;
@@ -76,7 +84,7 @@
             display: block;
             position: relative;
             z-index: 2;
-            filter: drop-shadow(0 4px 15px rgba(128, 18, 43, 0.4));
+            filter: drop-shadow(0 4px 15px rgba(28, 77, 52, 0.5));
         }
 
         .subtitulo {
@@ -93,7 +101,7 @@
         .hero-recuerdos h1 {
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(2.4rem, 5vw, 3.8rem);
-            color: var(--texto-principal);
+            color: var(--crema-principal);
             margin-bottom: 15px;
             line-height: 1.2;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -117,7 +125,7 @@
 
         .fecha {
             margin-top: 8px;
-            color: var(--texto-secundario);
+            color: var(--crema-secundario);
             font-family: 'Cinzel', serif;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -194,14 +202,14 @@
         .titulo {
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
-            color: var(--texto-principal);
+            color: var(--crema-principal);
             margin-bottom: 20px;
         }
 
         .texto {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.05rem;
-            color: var(--texto-secundario);
+            color: var(--crema-secundario);
             line-height: 1.9;
             max-width: 680px;
             margin: 0 auto 30px;
@@ -250,7 +258,7 @@
 
         .dropzone-label:hover {
             border-color: var(--oro-acento);
-            background: rgba(128, 18, 43, 0.2);
+            background: rgba(28, 77, 52, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
@@ -266,12 +274,12 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--texto-principal);
+            color: var(--crema-principal);
         }
 
         .dropzone-subtext {
             font-size: 0.8rem;
-            color: var(--texto-secundario);
+            color: var(--crema-secundario);
             margin-top: 4px;
         }
 
@@ -286,8 +294,8 @@
             padding: 18px 36px;
             border: 1px solid var(--oro-acento);
             border-radius: 50px;
-            background: linear-gradient(135deg, var(--guinda-brillante), var(--guinda));
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--verde-brillante), var(--verde-esmeralda));
+            color: var(--crema-principal);
             font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
             font-weight: 600;
@@ -295,13 +303,13 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.35s ease;
-            box-shadow: 0 10px 25px rgba(128, 18, 43, 0.5);
+            box-shadow: 0 10px 25px rgba(11, 25, 18, 0.5);
         }
 
         #btnSubir:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(163, 25, 58, 0.6);
-            background: linear-gradient(135deg, var(--guinda), var(--guinda-oscuro));
+            box-shadow: 0 15px 30px rgba(45, 106, 79, 0.5);
+            background: linear-gradient(135deg, var(--verde-esmeralda), #133825);
             border-color: #ffffff;
         }
 
@@ -313,7 +321,7 @@
 
         .nota {
             margin-top: 35px;
-            color: var(--texto-secundario);
+            color: var(--crema-secundario);
             font-size: 0.9rem;
             line-height: 1.8;
             font-weight: 400;
@@ -342,7 +350,7 @@
         .galeria-titulo {
             font-family: 'Cinzel Decorative', 'Cinzel', serif;
             font-size: 2.2rem;
-            color: var(--texto-principal);
+            color: var(--crema-principal);
             margin-bottom: 8px;
             letter-spacing: 1px;
         }
@@ -382,7 +390,7 @@
         .item-galeria:hover {
             transform: translateY(-6px);
             border-color: var(--oro-acento);
-            box-shadow: 0 16px 30px rgba(128, 18, 43, 0.3);
+            box-shadow: 0 16px 30px rgba(28, 77, 52, 0.4);
         }
 
         .item-galeria-inner {
@@ -408,8 +416,8 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: rgba(128, 18, 43, 0.9);
-            color: #ffffff;
+            background: rgba(28, 77, 52, 0.9);
+            color: var(--crema-principal);
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
@@ -429,7 +437,7 @@
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: rgba(13, 9, 10, 0.95);
+            background: rgba(11, 25, 18, 0.95);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
@@ -482,7 +490,7 @@
         }
 
         .lightbox-cerrar:hover {
-            background: var(--guinda);
+            background: var(--verde-esmeralda);
             border-color: #ffffff;
             transform: rotate(90deg);
         }
@@ -525,7 +533,7 @@
 
         <svg class="sello-svg" viewBox="0 0 120 120" fill="none">
             <circle cx="60" cy="60" r="56" stroke="#d4af37" stroke-width="1.5" />
-            <circle cx="60" cy="60" r="48" stroke="#80122b" stroke-width="1.5" stroke-dasharray="4 4" />
+            <circle cx="60" cy="60" r="48" stroke="#1c4d34" stroke-width="1.5" stroke-dasharray="4 4" />
             <path fill="#d4af37"
                 d="M82 45h-8l-4-6H50l-4 6h-8c-3.9 0-7 3.1-7 7v24c0 3.9 3.1 7 7 7h44c3.9 0 7-3.1 7-7V52c0-3.9-3.1-7-7-7zm-22 30c-7.2 0-13-5.8-13-13s5.8-13 13-13 13 5.8 13 13-5.8 13-13 13zm0-21c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z" />
         </svg>
@@ -536,7 +544,7 @@
         <svg class="ornamento-svg" viewBox="0 0 600 40" fill="none">
             <path d="M0 20h220c15 0 25-12 40-12s25 12 40 12h220" stroke="#d4af37" stroke-width="1.5"
                 stroke-linecap="round" />
-            <circle cx="300" cy="20" r="4" fill="#80122b" />
+            <circle cx="300" cy="20" r="4" fill="#1c4d34" />
             <circle cx="280" cy="20" r="2.5" fill="#d4af37" />
             <circle cx="320" cy="20" r="2.5" fill="#d4af37" />
         </svg>
@@ -550,24 +558,24 @@
 
         <div class="marco-floral">
             <svg class="flor-svg flor1" viewBox="0 0 200 200" fill="none">
-                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#80122b" opacity="0.3" />
-                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#80122b" opacity="0.3" />
+                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
+                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
                 <circle cx="20" cy="20" r="6" fill="#d4af37" opacity="0.5" />
             </svg>
             <svg class="flor-svg flor2" viewBox="0 0 200 200" fill="none">
-                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#80122b" opacity="0.3" />
-                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#80122b" opacity="0.3" />
+                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
+                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
             </svg>
             <svg class="flor-svg flor3" viewBox="0 0 200 200" fill="none">
-                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#80122b" opacity="0.3" />
-                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#80122b" opacity="0.3" />
+                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
+                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
             </svg>
             <svg class="flor-svg flor4" viewBox="0 0 200 200" fill="none">
-                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#80122b" opacity="0.3" />
-                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#80122b" opacity="0.3" />
+                <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
+                <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
             </svg>
         </div>
@@ -575,9 +583,9 @@
         <div class="contenedor-recuerdos">
 
             <svg class="icono-camara-svg" viewBox="0 0 64 64" fill="none">
-                <rect x="6" y="18" width="52" height="38" rx="8" stroke="#d4af37" stroke-width="2.5" fill="#161013" />
+                <rect x="6" y="18" width="52" height="38" rx="8" stroke="#d4af37" stroke-width="2.5" fill="#11241a" />
                 <circle cx="32" cy="37" r="12" stroke="#d4af37" stroke-width="2.5" />
-                <circle cx="32" cy="37" r="6" fill="#80122b" />
+                <circle cx="32" cy="37" r="6" fill="#1c4d34" />
                 <path d="M22 18L25 11H39L42 18H22Z" fill="#d4af37" />
                 <circle cx="48" cy="25" r="2" fill="#d4af37" />
             </svg>
@@ -587,7 +595,7 @@
 
             <svg class="ornamento-svg" viewBox="0 0 300 20" fill="none" style="max-width: 180px;">
                 <path d="M0 10H120M180 10H300" stroke="#d4af37" stroke-width="1" />
-                <circle cx="150" cy="10" r="3" fill="#80122b" />
+                <circle cx="150" cy="10" r="3" fill="#1c4d34" />
             </svg>
 
             <p class="texto">
@@ -734,7 +742,7 @@
                     estado.innerHTML += `
                         <div style="margin-top: 25px; padding: 20px; background: var(--tarjeta-suave); border-radius: 12px; border: 1px solid var(--oro-acento); box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
                             <h3 style="font-family: 'Cinzel Decorative', 'Cinzel', serif; color: var(--oro-acento); margin-bottom: 6px; font-size: 1.2rem;">🤍 ¡Muchas gracias!</h3>
-                            <p style="font-size: 0.9rem; color: var(--texto-secundario);">Tus recuerdos se han compartido correctamente.</p>
+                            <p style="font-size: 0.9rem; color: var(--crema-secundario);">Tus recuerdos se han compartido correctamente.</p>
                         </div>
                     `;
 
@@ -769,7 +777,7 @@
 
                 if (fotos.length === 0) {
                     contenedor.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--texto-secundario); font-style: italic; font-size: 0.95rem;">
+                        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--crema-secundario); font-style: italic; font-size: 0.95rem;">
                             ✨ Aún no hay fotos en el álbum. ¡Sé el primero en subir un recuerdo!
                         </div>
                     `;
@@ -834,14 +842,14 @@
 
             if (tipo === "info") {
                 el.style.background = "var(--tarjeta-suave)";
-                el.style.color = "var(--texto-principal)";
+                el.style.color = "var(--crema-principal)";
                 el.style.borderLeft = "3px solid var(--oro-acento)";
             } else if (tipo === "success") {
-                el.style.background = "rgba(40, 167, 69, 0.15)";
-                el.style.color = "#85e89d";
+                el.style.background = "rgba(40, 167, 69, 0.2)";
+                el.style.color = "#a3e635";
                 el.style.borderLeft = "3px solid #28a745";
             } else if (tipo === "error") {
-                el.style.background = "rgba(220, 53, 69, 0.15)";
+                el.style.background = "rgba(220, 53, 69, 0.2)";
                 el.style.color = "#f87171";
                 el.style.borderLeft = "3px solid #dc3545";
             }
@@ -852,7 +860,7 @@
         function mostrarNotificacion(mensaje, tipo) {
             const estado = document.getElementById("estado");
             estado.innerHTML = `
-                <div style="padding: 14px; background: rgba(128, 18, 43, 0.25); color: var(--texto-principal); border-radius: 8px; border: 1px solid var(--oro-acento); margin-top: 15px; font-size: 0.9rem; font-weight: 500;">
+                <div style="padding: 14px; background: rgba(28, 77, 52, 0.35); color: var(--crema-principal); border-radius: 8px; border: 1px solid var(--oro-acento); margin-top: 15px; font-size: 0.9rem; font-weight: 500;">
                     ⚠️ ${mensaje}
                 </div>
             `;
