@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const contenedorSobre = document.getElementById("contenedorSobre");
   const seccionPrincipal = document.getElementById("seccionPrincipal");
   const textoElemento = document.getElementById("textoEscrito");
-  const textoAEscribir = "Sarahí & Enrique";
+  const textoAEscribir = "Sarahí & Enrique 27 de Septiembre de 2026";
   let abierto = false;
 
   sobre.addEventListener("click", () => {
