@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 1000);
         });
       });
+      startPetals();
     }, 800);
   });
 
@@ -157,6 +158,25 @@ function renderizarSeccionConfirmacion(invitado) {
   if (invitado.acepto) textoBoton = "Asistencia Confirmada";
   if (invitado.rechazo) textoBoton = "Inasistencia Registrada";
 
+  // Identificador único para el código QR
+  const qrData =
+    invitado.familiaNombre ||
+    invitado.familiaidentificador ||
+    invitado.id ||
+    "invitado";
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+
+  // Se genera el bloque del pase QR únicamente si aceptó
+  let bloqueQR = "";
+  if (invitado.acepto) {
+    bloqueQR = `
+      <div class="seccion-pase-qr">
+        <p class="texto-pase-entrada">Este es tu pase de entrada</p>
+        <img class="codigo-qr-img" src="${qrUrl}" alt="Pase de Entrada QR" />
+      </div>
+    `;
+  }
+
   contenedor.innerHTML = `
     <!-- Sección Principal de Confirmación -->
     <section class="confirmacionInvitacion">
@@ -168,6 +188,8 @@ function renderizarSeccionConfirmacion(invitado) {
           <span id="nombreFamilia" class="nombre-familia">${invitado.FamiliaDesc || invitado.familiaNombre}</span>
           <span id="CantidadPases" class="cantidad-pases">Pases asignados: ${invitado.Pases}</span>
         </div>
+
+        ${bloqueQR}
 
         <button id="btnAbrirModal" class="boton-confirmar">${textoBoton}</button>
       </div>
@@ -316,3 +338,69 @@ function mostrarMensaje(asistira) {
 // console.clear();
 //}
 //}, 1000);
+
+let petalInterval = null;
+
+function createPetal() {
+  const leaf = document.createElement("div");
+  leaf.className = "petal";
+
+  // Tamaños variados y proporcionales
+  const width = Math.random() * 14 + 14; // entre 14px y 28px
+  const height = width * (Math.random() * 0.3 + 1.4); // forma alargada
+
+  leaf.style.width = `${width}px`;
+  leaf.style.height = `${height}px`;
+
+  // Posición horizontal inicial
+  leaf.style.left = `${Math.random() * 100}vw`;
+
+  // Tonalidades de verde con degradado para mayor realismo
+  const greenGradients = [
+    "linear-gradient(135deg, #4CAF50, #2E7D32)", // Verde vivo
+    "linear-gradient(135deg, #81C784, #388E3C)", // Verde menta/hoja fresca
+    "linear-gradient(135deg, #A5D6A7, #43A047)", // Verde suave
+    "linear-gradient(135deg, #66BB6A, #1B5E20)", // Verde bosque
+    "linear-gradient(135deg, #9CCC65, #558B2F)", // Verde lima/olivo
+    "linear-gradient(135deg, #26A69A, #00695C)", // Verde esmeralda
+  ];
+
+  leaf.style.background =
+    greenGradients[Math.floor(Math.random() * greenGradients.length)];
+
+  // Ángulo de inclinación inicial aleatorio
+  const initialRotate = Math.random() * 360;
+  leaf.style.transform = `rotate(${initialRotate}deg)`;
+
+  // Duración de caída más lenta (10 a 16 segundos para mayor suavidad)
+  const duration = Math.random() * 6 + 10;
+  leaf.style.setProperty("--fall-duration", `${duration}s`);
+
+  // Desplazamiento lateral suave en una sola dirección (entre -30px y 30px)
+  const drift = (Math.random() - 0.5) * 60;
+  leaf.style.setProperty("--drift-distance", `${drift}px`);
+
+  // Giro final uniforme
+  const finalRotation = initialRotate + (Math.random() > 0.5 ? 180 : -180);
+  leaf.style.setProperty("--final-rotation", `${finalRotation}deg`);
+
+  // Opacidad
+  const opacity = Math.random() * 0.4 + 0.6;
+  leaf.style.setProperty("--leaf-opacity", opacity);
+
+  document.body.appendChild(leaf);
+
+  // Limpieza del elemento al finalizar
+  setTimeout(() => {
+    leaf.remove();
+  }, duration * 1000);
+}
+
+function startPetals() {
+  if (petalInterval) return;
+
+  const isMobile = window.innerWidth < 768;
+  const interval = isMobile ? 1200 : 700; // Frecuencia más baja para mantener fluidez
+
+  petalInterval = setInterval(createPetal, interval);
+}

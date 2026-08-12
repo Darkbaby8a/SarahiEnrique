@@ -1156,3 +1156,100 @@ font-family: 'Great Vibes', cursive;
   cursor: pointer;
   text-decoration: underline;
 }
+.seccion-pase-qr {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background-color: #fcfcfc;
+  border: 1px dashed #d3c4b4;
+  border-radius: 12px;
+}
+
+.texto-pase-entrada {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  color: #6b5b4e;
+  margin: 0;
+}
+
+.codigo-qr-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 8px;
+  background-color: #ffffff;
+}
+
+.petal {
+    position: fixed;
+    top: -50px;
+    z-index: 9999;
+    pointer-events: none;
+    
+    /* Forma orgánica de hoja */
+    border-radius: 0% 70% 2% 70%;
+    
+    /* Sombra suave e iluminación interna */
+    box-shadow: 
+        inset -2px -2px 5px rgba(0, 0, 0, 0.15),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.25),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+
+    /* Caída suave */
+    animation: fallSmooth var(--fall-duration) cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    will-change: transform, opacity;
+}
+
+/* Animación de caída continua y fluida (sin zigzag brusco) */
+@keyframes fallSmooth {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) translateX(0) rotate(0deg) rotateY(0deg);
+    }
+    
+    10% {
+        opacity: var(--leaf-opacity, 0.8);
+    }
+
+    85% {
+        opacity: var(--leaf-opacity, 0.8);
+    }
+
+    100% {
+        /* Caída completa con un desplazamiento lateral leve y giro continuo */
+        transform: 
+            translateY(108vh) 
+            translateX(var(--drift-distance)) 
+            rotate(var(--final-rotation)) 
+            rotateY(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fall{
+
+    0%{
+        transform: translateY(-60px) translateX(0) rotate(0deg);
+    }
+
+    25%{
+        transform: translateY(25vh) translateX(calc(var(--wobble-distance) * .5)) rotate(90deg);
+    }
+
+    50%{
+        transform: translateY(50vh) translateX(calc(var(--wobble-distance) * -1)) rotate(180deg);
+    }
+
+    75%{
+        transform: translateY(75vh) translateX(calc(var(--wobble-distance) * .6)) rotate(270deg);
+    }
+
+    100%{
+        transform: translateY(110vh) translateX(0) rotate(360deg);
+    }
+
+}
