@@ -253,7 +253,7 @@ html, body {
 max-width: 245px;
   text-align: center;
   line-height: 1.6;
-  backdrop-filter: blur(10px);
+  /*backdrop-filter: blur(10px);*/
   border-radius: 35px;
 }
 
@@ -844,7 +844,7 @@ font-family: 'Great Vibes', cursive;
 .caja-tiempo {
   flex: 1;
   background-color: rgba(255, 255, 255, 0.85);
-/*  backdrop-filter: blur(4px); /* Efecto cristal translúcido */
+  backdrop-filter: blur(4px); /* Efecto cristal translúcido */
   border: 1px solid rgba(126, 140, 84, 0.4); /* Borde con verde olivo #7E8C54 */
   border-radius: 14px;
   padding: 16px 4px;
