@@ -21,7 +21,7 @@ export async function handler(event) {
       body.file,
 
       {
-        folder: "boda",
+        folder: "SarahiEnrique",
 
         resource_type: "auto",
       },

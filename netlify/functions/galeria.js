@@ -21,7 +21,7 @@ export async function handler(event) {
 
   try {
     const resultado = await cloudinary.search
-      .expression("folder:boda")
+      .expression("folder:SarahiEnrique")
       .sort_by("created_at", "desc")
       .max_results(200)
       .execute();
