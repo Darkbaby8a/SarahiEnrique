@@ -239,7 +239,7 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: rgb(234, 228, 204);
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -289,14 +289,12 @@ width: 100%;
 /* Iniciales S & E superpuestas a la derecha */
 .textoHorizontal.derecho {
 font-family: 'Great Vibes', cursive;
-  font-size: 2.8rem;
-  color: rgb(109, 83, 42);
-  background-color: rgb(234, 228, 204);
-  padding: 5px 15px;
-  border-radius: 30px;
-  border: 1px solid rgb(109, 83, 42);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  white-space: nowrap;
+    font-size: 2.8rem;
+   
+    padding: 5px 15px;
+    border-radius: 30px;
+   
+    white-space: nowrap;
 }
 
 /* --- SECTION BENDICIÓN DE PADRES --- */
