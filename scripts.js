@@ -159,7 +159,7 @@ function renderizarSeccionConfirmacion(invitado) {
   if (invitado.rechazo) textoBoton = "Inasistencia Registrada";
 
   // Identificador único para el código QR
-  const qrData = invitado.familiaidentificador;
+  const qrData = familia;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
 
   // Se genera el bloque del pase QR únicamente si aceptó
