@@ -276,6 +276,7 @@ async function enviarRespuesta(asistira) {
       : "Inasistencia Registrada";
 
     mostrarMensaje(asistira);
+    renderizarSeccionConfirmacion(invitado);
   } catch (error) {
     console.error(error);
     alert("No fue posible registrar tu respuesta. Inténtalo nuevamente.");
