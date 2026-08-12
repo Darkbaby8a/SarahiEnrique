@@ -377,7 +377,6 @@ font-family: 'Great Vibes', cursive;
   z-index: 1;
   left: -315px;
 }
-
 /* --- SECCIÓN SAVE THE DATE ---
    Fondo crema:           rgb(234, 228, 204)
    Texto / Detalles verde: rgb(55, 57, 36)
@@ -385,36 +384,35 @@ font-family: 'Great Vibes', cursive;
 */
 
 .seccion-save-date {
+  display: block;
   width: 100vw;
   min-height: 100dvh;
   background-color: rgb(234, 228, 204);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   padding: 40px 15px;
   box-sizing: border-box;
 }
 
 /* Encabezado superior con adornos */
 .parte-arriba {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  display: block;
+  text-align: center;
   width: 100%;
   margin-bottom: 20px;
 }
 
 .titulo-save {
+  display: inline-block;
+  vertical-align: middle;
   font-family: 'Great Vibes', cursive;
   font-size: 2.8rem;
   color: rgb(55, 57, 36);
-  text-align: center;
   font-weight: normal;
+  margin: 0 12px;
 }
 
 .esquinero {
+  display: inline-block;
+  vertical-align: middle;
   width: 70px;
   height: auto;
   opacity: 0.8;
@@ -429,21 +427,21 @@ font-family: 'Great Vibes', cursive;
 }
 
 /* Panel central de fotos y fecha */
-.panelFecha.displayflex {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.panelFecha {
+  display: block;
   width: 100%;
   max-width: 380px;
   height: 65vh; /* Ocupa el 65% del alto de la pantalla */
+  margin: 0 auto;
 }
 
 /* Columnas individuales con foto de fondo */
 .columna-foto {
+  display: block;
+  float: left;
   position: relative;
-  flex: 1;
+  width: calc(33.333% - 7px); /* Divide el espacio en 3 columnas ajustando por el margen */
+  margin-right: 10px;
   height: 100%;
   border-radius: 20px;
   background-size: cover;
@@ -452,18 +450,19 @@ font-family: 'Great Vibes', cursive;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(55, 57, 36, 0.18);
   border: 1px solid rgba(109, 83, 42, 0.2);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 20px;
+  box-sizing: border-box;
 }
 
-/* Desplazamiento leve de la foto central para un efecto visual dinámico */
+.columna-foto:last-child {
+  margin-right: 0;
+}
+
+/* Desplazamiento leve de la foto central */
 .fotoalargadamedio {
   transform: translateY(-12px);
 }
 
-/* Sombra gradual en el fondo de las fotos para resaltar los números */
+/* Sombra gradual en el fondo de las fotos */
 .overlay-foto {
   position: absolute;
   top: 0;
@@ -476,7 +475,11 @@ font-family: 'Great Vibes', cursive;
 
 /* Números de la fecha */
 .fechaabajo {
-  position: relative;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
   z-index: 2;
   font-family: 'Montserrat', sans-serif;
   font-size: 2rem;
@@ -484,6 +487,11 @@ font-family: 'Great Vibes', cursive;
   color: rgb(234, 228, 204);
   letter-spacing: 1px;
   text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* Estilo para limpiar los floats dentro del contenedor */
+.clear {
+  clear: both;
 }
 /* --- SECCIÓN DE EVENTOS Y UBICACIONES ---
    Verde oliva principal: rgb(55, 57, 36)
