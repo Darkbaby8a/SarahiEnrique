@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const contenedorSobre = document.getElementById("contenedorSobre");
   const seccionPrincipal = document.getElementById("seccionPrincipal");
   const textoElemento = document.getElementById("textoEscrito");
-  const textoAEscribir = "Sarahí & Enrique 27 de Septiembre de 2026";
+  const textoEscritoFecha = document.getElementById("textoEscritoFecha");
+  const textoAEscribir = "Sarahí & Enrique";
+  const textoAEscribirFecha = "27 de Septiembre de 2026";
   let abierto = false;
 
   sobre.addEventListener("click", () => {
@@ -16,6 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Iniciar el efecto de mecanografiado
     setTimeout(() => {
       escribirTexto(textoElemento, textoAEscribir, 90, () => {
+        // 3. Ocultar el sobre y mostrar la sección principal con la foto
+        setTimeout(() => {
+          contenedorSobre.classList.add("oculto");
+          seccionPrincipal.classList.add("visible");
+        }, 1000);
+      });
+            escribirTexto(textoEscritoFecha, textoAEscribirFecha, 90, () => {
         // 3. Ocultar el sobre y mostrar la sección principal con la foto
         setTimeout(() => {
           contenedorSobre.classList.add("oculto");
