@@ -17,28 +17,28 @@
 
     <style>
         /* ==========================================
-           PALETA DE COLORES (VERDE, CREMA Y DORADO)
+           PALETA DE COLORES (FONDO BEIGE, DETALLES VERDES Y DORADO)
            ========================================== */
         :root {
-            --fondo-principal: #0b1912;
-            /* Verde muy oscuro para el fondo */
-            --tarjeta-bg: #11241a;
-            /* Verde bosque profundo para tarjetas */
-            --tarjeta-suave: #193325;
-            /* Verde ligeramente más claro para elementos contenedores */
+            --fondo-principal: #f9f6f0;
+            /* Beige cálido suave para el fondo general */
+            --tarjeta-bg: #ffffff;
+            /* Blanco puro/crema muy ligero para tarjetas */
+            --tarjeta-suave: #f3efe6;
+            /* Beige medio para contenedores e inputs */
             --verde-esmeralda: #1c4d34;
-            /* Verde esmeralda acento */
-            --verde-brillante: #2d6a4f;
-            /* Verde para hover y estados destacados */
-            --crema-principal: #f8f5ee;
-            /* Crema suave para textos principales */
-            --crema-secundario: #dcd6c8;
-            /* Crema atenuado para subtítulos y párrafos */
-            --oro-acento: #d4af37;
-            /* Dorado cálido */
-            --oro-suave: rgba(212, 175, 55, 0.35);
+            /* Verde bosque elegante */
+            --verde-brillante: #2a6f4e;
+            /* Verde para hovers e interacción */
+            --texto-principal: #1b2820;
+            /* Verde muy oscuro para alta legibilidad del texto */
+            --texto-secundario: #4a5d52;
+            /* Verde grisáceo para subtítulos */
+            --oro-acento: #c59b27;
+            /* Dorado cálido elegante */
+            --oro-suave: rgba(197, 155, 39, 0.3);
             /* Dorado translúcido para bordes */
-            --sombra-elegante: 0 25px 50px rgba(0, 0, 0, 0.6), 0 10px 25px rgba(28, 77, 52, 0.2);
+            --sombra-elegante: 0 15px 35px rgba(28, 77, 52, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
         }
 
         * {
@@ -50,9 +50,9 @@
         body {
             background-color: var(--fondo-principal);
             background-image:
-                radial-gradient(circle at 50% 0%, rgba(28, 77, 52, 0.35) 0%, transparent 60%),
-                radial-gradient(circle at 50% 100%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
-            color: var(--crema-principal);
+                radial-gradient(circle at 50% 0%, rgba(28, 77, 52, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, rgba(197, 155, 39, 0.08) 0%, transparent 50%);
+            color: var(--texto-principal);
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
             padding-bottom: 80px;
@@ -68,7 +68,7 @@
         .brillo {
             width: 320px;
             height: 320px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(197, 155, 39, 0.12) 0%, transparent 70%);
             position: absolute;
             left: 50%;
             top: 20px;
@@ -84,14 +84,14 @@
             display: block;
             position: relative;
             z-index: 2;
-            filter: drop-shadow(0 4px 15px rgba(28, 77, 52, 0.5));
+            filter: drop-shadow(0 4px 10px rgba(28, 77, 52, 0.15));
         }
 
         .subtitulo {
             display: block;
             font-family: 'Cinzel', serif;
             letter-spacing: 6px;
-            color: var(--oro-acento);
+            color: var(--verde-esmeralda);
             font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -101,10 +101,10 @@
         .hero-recuerdos h1 {
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(2.4rem, 5vw, 3.8rem);
-            color: var(--crema-principal);
+            color: var(--verde-esmeralda);
             margin-bottom: 15px;
             line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .ornamento-svg {
@@ -125,7 +125,7 @@
 
         .fecha {
             margin-top: 8px;
-            color: var(--crema-secundario);
+            color: var(--texto-secundario);
             font-family: 'Cinzel', serif;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -152,7 +152,7 @@
             position: absolute;
             width: 220px;
             height: 220px;
-            opacity: 0.85;
+            opacity: 0.6;
             transition: opacity 0.3s ease;
         }
 
@@ -202,14 +202,14 @@
         .titulo {
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
-            color: var(--crema-principal);
+            color: var(--verde-esmeralda);
             margin-bottom: 20px;
         }
 
         .texto {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.05rem;
-            color: var(--crema-secundario);
+            color: var(--texto-secundario);
             line-height: 1.9;
             max-width: 680px;
             margin: 0 auto 30px;
@@ -218,17 +218,17 @@
 
         .cita-box {
             background: var(--tarjeta-suave);
-            border-left: 3px solid var(--oro-acento);
-            border-right: 3px solid var(--oro-acento);
+            border-left: 3px solid var(--verde-esmeralda);
+            border-right: 3px solid var(--verde-esmeralda);
             border-radius: 8px;
             padding: 20px 30px;
             margin: 35px 0;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.02);
         }
 
         .cita {
             font-family: 'Cinzel', serif;
-            color: var(--oro-acento);
+            color: var(--verde-esmeralda);
             font-size: 1.05rem;
             font-style: italic;
             line-height: 1.6;
@@ -257,29 +257,29 @@
         }
 
         .dropzone-label:hover {
-            border-color: var(--oro-acento);
-            background: rgba(28, 77, 52, 0.3);
+            border-color: var(--verde-esmeralda);
+            background: #eae4d8;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(28, 77, 52, 0.08);
         }
 
         .dropzone-icon {
             width: 48px;
             height: 48px;
             margin-bottom: 12px;
-            fill: var(--oro-acento);
+            fill: var(--verde-esmeralda);
         }
 
         .dropzone-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--crema-principal);
+            color: var(--verde-esmeralda);
         }
 
         .dropzone-subtext {
             font-size: 0.8rem;
-            color: var(--crema-secundario);
+            color: var(--texto-secundario);
             margin-top: 4px;
         }
 
@@ -294,8 +294,8 @@
             padding: 18px 36px;
             border: 1px solid var(--oro-acento);
             border-radius: 50px;
-            background: linear-gradient(135deg, var(--verde-brillante), var(--verde-esmeralda));
-            color: var(--crema-principal);
+            background: linear-gradient(135deg, var(--verde-esmeralda), #133825);
+            color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
             font-weight: 600;
@@ -303,13 +303,13 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.35s ease;
-            box-shadow: 0 10px 25px rgba(11, 25, 18, 0.5);
+            box-shadow: 0 10px 20px rgba(28, 77, 52, 0.2);
         }
 
         #btnSubir:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(45, 106, 79, 0.5);
-            background: linear-gradient(135deg, var(--verde-esmeralda), #133825);
+            box-shadow: 0 15px 30px rgba(28, 77, 52, 0.3);
+            background: linear-gradient(135deg, var(--verde-brillante), var(--verde-esmeralda));
             border-color: #ffffff;
         }
 
@@ -321,14 +321,14 @@
 
         .nota {
             margin-top: 35px;
-            color: var(--crema-secundario);
+            color: var(--texto-secundario);
             font-size: 0.9rem;
             line-height: 1.8;
             font-weight: 400;
         }
 
         .nota strong {
-            color: var(--oro-acento);
+            color: var(--verde-esmeralda);
         }
 
         /* GALERÍA MASONRY ELEGANTE */
@@ -350,7 +350,7 @@
         .galeria-titulo {
             font-family: 'Cinzel Decorative', 'Cinzel', serif;
             font-size: 2.2rem;
-            color: var(--crema-principal);
+            color: var(--verde-esmeralda);
             margin-bottom: 8px;
             letter-spacing: 1px;
         }
@@ -381,16 +381,16 @@
             padding: 12px 12px 16px 12px;
             background: var(--tarjeta-suave);
             border-radius: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(197, 155, 39, 0.25);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .item-galeria:hover {
             transform: translateY(-6px);
-            border-color: var(--oro-acento);
-            box-shadow: 0 16px 30px rgba(28, 77, 52, 0.4);
+            border-color: var(--verde-esmeralda);
+            box-shadow: 0 12px 25px rgba(28, 77, 52, 0.15);
         }
 
         .item-galeria-inner {
@@ -417,7 +417,7 @@
             top: 10px;
             right: 10px;
             background: rgba(28, 77, 52, 0.9);
-            color: var(--crema-principal);
+            color: #ffffff;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
@@ -427,7 +427,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             border: 1px solid var(--oro-acento);
             z-index: 2;
         }
@@ -437,8 +437,8 @@
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: rgba(11, 25, 18, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(27, 40, 32, 0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -459,7 +459,7 @@
             border-radius: 12px;
             background: var(--tarjeta-bg);
             padding: 12px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             border: 1px solid var(--oro-acento);
         }
 
@@ -475,9 +475,9 @@
             position: absolute;
             top: 25px;
             right: 25px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             border: 1px solid var(--oro-acento);
-            color: #fff;
+            color: #ffffff;
             width: 42px;
             height: 42px;
             border-radius: 50%;
@@ -532,9 +532,9 @@
         <div class="brillo"></div>
 
         <svg class="sello-svg" viewBox="0 0 120 120" fill="none">
-            <circle cx="60" cy="60" r="56" stroke="#d4af37" stroke-width="1.5" />
+            <circle cx="60" cy="60" r="56" stroke="#c59b27" stroke-width="1.5" />
             <circle cx="60" cy="60" r="48" stroke="#1c4d34" stroke-width="1.5" stroke-dasharray="4 4" />
-            <path fill="#d4af37"
+            <path fill="#c59b27"
                 d="M82 45h-8l-4-6H50l-4 6h-8c-3.9 0-7 3.1-7 7v24c0 3.9 3.1 7 7 7h44c3.9 0 7-3.1 7-7V52c0-3.9-3.1-7-7-7zm-22 30c-7.2 0-13-5.8-13-13s5.8-13 13-13 13 5.8 13 13-5.8 13-13 13zm0-21c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z" />
         </svg>
 
@@ -542,11 +542,11 @@
         <h1>Comparte tus recuerdos</h1>
 
         <svg class="ornamento-svg" viewBox="0 0 600 40" fill="none">
-            <path d="M0 20h220c15 0 25-12 40-12s25 12 40 12h220" stroke="#d4af37" stroke-width="1.5"
+            <path d="M0 20h220c15 0 25-12 40-12s25 12 40 12h220" stroke="#c59b27" stroke-width="1.5"
                 stroke-linecap="round" />
             <circle cx="300" cy="20" r="4" fill="#1c4d34" />
-            <circle cx="280" cy="20" r="2.5" fill="#d4af37" />
-            <circle cx="320" cy="20" r="2.5" fill="#d4af37" />
+            <circle cx="280" cy="20" r="2.5" fill="#c59b27" />
+            <circle cx="320" cy="20" r="2.5" fill="#c59b27" />
         </svg>
 
         <div class="novios">Sarahí &amp; Enrique</div>
@@ -560,41 +560,41 @@
             <svg class="flor-svg flor1" viewBox="0 0 200 200" fill="none">
                 <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
-                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
-                <circle cx="20" cy="20" r="6" fill="#d4af37" opacity="0.5" />
+                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#c59b27" opacity="0.35" />
+                <circle cx="20" cy="20" r="6" fill="#c59b27" opacity="0.5" />
             </svg>
             <svg class="flor-svg flor2" viewBox="0 0 200 200" fill="none">
                 <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
-                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
+                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#c59b27" opacity="0.35" />
             </svg>
             <svg class="flor-svg flor3" viewBox="0 0 200 200" fill="none">
                 <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
-                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
+                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#c59b27" opacity="0.35" />
             </svg>
             <svg class="flor-svg flor4" viewBox="0 0 200 200" fill="none">
                 <path d="M20 20C60 20 100 40 120 80C100 70 60 70 20 20Z" fill="#1c4d34" opacity="0.4" />
                 <path d="M20 20C20 60 40 100 80 120C70 100 70 60 20 20Z" fill="#1c4d34" opacity="0.4" />
-                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#d4af37" opacity="0.35" />
+                <path d="M20 20C80 30 130 80 140 140C100 120 50 70 20 20Z" fill="#c59b27" opacity="0.35" />
             </svg>
         </div>
 
         <div class="contenedor-recuerdos">
 
             <svg class="icono-camara-svg" viewBox="0 0 64 64" fill="none">
-                <rect x="6" y="18" width="52" height="38" rx="8" stroke="#d4af37" stroke-width="2.5" fill="#11241a" />
-                <circle cx="32" cy="37" r="12" stroke="#d4af37" stroke-width="2.5" />
+                <rect x="6" y="18" width="52" height="38" rx="8" stroke="#c59b27" stroke-width="2.5" fill="#f3efe6" />
+                <circle cx="32" cy="37" r="12" stroke="#c59b27" stroke-width="2.5" />
                 <circle cx="32" cy="37" r="6" fill="#1c4d34" />
-                <path d="M22 18L25 11H39L42 18H22Z" fill="#d4af37" />
-                <circle cx="48" cy="25" r="2" fill="#d4af37" />
+                <path d="M22 18L25 11H39L42 18H22Z" fill="#c59b27" />
+                <circle cx="48" cy="25" r="2" fill="#1c4d34" />
             </svg>
 
             <span class="subtitulo">Álbum Digital</span>
             <h2 class="titulo">Comparte tus momentos</h2>
 
             <svg class="ornamento-svg" viewBox="0 0 300 20" fill="none" style="max-width: 180px;">
-                <path d="M0 10H120M180 10H300" stroke="#d4af37" stroke-width="1" />
+                <path d="M0 10H120M180 10H300" stroke="#c59b27" stroke-width="1" />
                 <circle cx="150" cy="10" r="3" fill="#1c4d34" />
             </svg>
 
@@ -652,6 +652,10 @@
 
         <div id="galeriaBoda"></div>
     </section>
+
+
+
+
 
     <!-- JAVASCRIPT DE LÓGICA E INTERACCIÓN -->
     <script>
