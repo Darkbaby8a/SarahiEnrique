@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 1000);
         });
       });
-      startPetals();
+      //startPetals();
     }, 800);
   });
 
