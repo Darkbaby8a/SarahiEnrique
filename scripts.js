@@ -355,12 +355,12 @@ function createPetal() {
 
   // Tonalidades de verde con degradado para mayor realismo
   const greenGradients = [
-    "linear-gradient(135deg, #4CAF50, #2E7D32)", // Verde vivo
-    "linear-gradient(135deg, #81C784, #388E3C)", // Verde menta/hoja fresca
-    "linear-gradient(135deg, #A5D6A7, #43A047)", // Verde suave
-    "linear-gradient(135deg, #66BB6A, #1B5E20)", // Verde bosque
-    "linear-gradient(135deg, #9CCC65, #558B2F)", // Verde lima/olivo
-    "linear-gradient(135deg, #26A69A, #00695C)", // Verde esmeralda
+    "linear-gradient(135deg, #E8E3C8, #B7B58A)", // Crema + olivo suave
+    "linear-gradient(135deg, #F3E9D2, #C5C9A5)", // Crema + salvia
+    "linear-gradient(135deg, #DDE2C6, #9DA77A)", // Verde salvia otoñal
+    "linear-gradient(135deg, #F1DFC4, #B8B68A)", // Beige cálido + olivo
+    "linear-gradient(135deg, #E6E0C9, #A8AD82)", // Crema + verde musgo claro
+    "linear-gradient(135deg, #F5E6C8, #C9C49A)", // Arena + verde oliva
   ];
 
   leaf.style.background =

@@ -401,7 +401,7 @@ font-family: 'Great Vibes', cursive;
 
 /* Encabezado superior con adornos */
 .parte-arriba {
-  display: block;
+  display: inline-flex;
   text-align: center;
   width: 100%;
   margin-bottom: 20px;
@@ -426,7 +426,7 @@ font-family: 'Great Vibes', cursive;
 }
 
 .esquineroizquierda90grados {
-  transform: rotate(90deg);
+  transform: scaleX(-1) rotate(180deg);
 }
 
 .esquineroizquierda180grados {
